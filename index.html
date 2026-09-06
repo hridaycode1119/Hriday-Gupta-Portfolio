@@ -308,9 +308,9 @@
 
             </div>
 
-            <!-- Right Column: Image with top-edge white blend -->
+            <!-- Right Column: Image with top-edge white blend (unobstructed) -->
             <div class="lg:col-span-5 flex justify-center lg:justify-end items-center w-full mt-space-lg lg:mt-0">
-              <div class="relative w-full max-w-[460px] aspect-[3/4] rounded-3xl lg:rounded-[2.25rem] overflow-hidden bg-surface-container dark:bg-black shadow-lg border border-outline-variant/30 dark:border-white/10 group perspective-container">
+              <div id="about-photo-wrapper" class="relative w-full max-w-[460px] aspect-[3/4] rounded-3xl lg:rounded-[2.25rem] overflow-hidden bg-surface-container dark:bg-black shadow-lg border border-outline-variant/30 dark:border-white/10 group perspective-container will-change-transform">
                 
                 <!-- Profile Photo -->
                 <img src="hriday-about.jpg" 
@@ -319,20 +319,6 @@
 
                 <!-- Top Edge White Blend Gradient Overlay -->
                 <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10"></div>
-
-                <!-- Subtle Bottom Shadow / Vignette for text contrast -->
-                <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none z-10"></div>
-
-                <!-- Frosted Overlay Badges at bottom -->
-                <div class="absolute bottom-5 left-5 right-5 flex items-center justify-between z-20">
-                  <div class="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md flex items-center gap-2 text-white">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="font-label-mono text-xs uppercase tracking-wider font-semibold">Hriday Gupta</span>
-                  </div>
-                  <span class="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md font-label-mono text-[11px] uppercase tracking-wider text-gray-200">
-                    Delhi NCR, IN
-                  </span>
-                </div>
 
               </div>
             </div>
@@ -344,7 +330,7 @@
 
       <!-- CONTINUOUS MARQUEE TICKER -->
       <section class="w-full py-space-md bg-surface-container dark:bg-[#181919] border-y border-outline-variant/30 dark:border-white/10 overflow-hidden whitespace-nowrap select-none my-space-md">
-        <div class="inline-flex items-center gap-space-2xl animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]">
+        <div id="marquee-track" class="inline-flex items-center gap-space-2xl animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused] will-change-transform">
           <div class="flex items-center gap-space-2xl text-on-surface-variant dark:text-gray-300 font-label-mono text-label-mono uppercase tracking-widest">
             <span>Full-Stack Engineering</span>
             <span class="w-1.5 h-1.5 rounded-full bg-primary dark:bg-white"></span>
@@ -387,7 +373,7 @@
           <!-- Left Sticky Header & Counters -->
           <div class="lg:col-span-5 flex flex-col gap-space-md lg:sticky lg:top-24">
             <span class="font-label-mono text-label-mono uppercase text-secondary dark:text-gray-400 tracking-widest">[Philosophy &amp; Method]</span>
-            <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight">
+            <h2 class="scroll-slide-heading font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight will-change-transform" data-direction="right">
               Merging algorithmic rigor with intelligent AI workflows.
             </h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-gray-300">
@@ -489,7 +475,7 @@
           <div class="overflow-hidden w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/30 dark:border-white/10 pb-6">
             <div>
               <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Curated Engineering Archive]</span>
-              <h2 class="font-display-xl text-headline-lg-mobile sm:text-headline-lg text-on-surface dark:text-white tracking-tight uppercase select-none mt-1">
+              <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg text-on-surface dark:text-white tracking-tight uppercase select-none mt-1 will-change-transform inline-block" data-direction="left">
                 Featured Projects
               </h2>
             </div>
@@ -866,7 +852,7 @@
           <div class="lg:col-span-6 flex flex-col gap-space-lg">
             <div>
               <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Career Milestones]</span>
-              <h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight mt-1">
+              <h3 class="scroll-slide-heading font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight mt-1 will-change-transform inline-block" data-direction="left">
                 Work Experience
               </h3>
             </div>
@@ -926,7 +912,7 @@
           <div id="education" class="lg:col-span-6 flex flex-col gap-space-lg">
             <div>
               <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Academic Foundation]</span>
-              <h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight mt-1">
+              <h3 class="scroll-slide-heading font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight mt-1 will-change-transform inline-block" data-direction="right">
                 Education
               </h3>
             </div>
@@ -991,9 +977,9 @@
       <!-- SKILLS & TECHNICAL PROFICIENCY (BENTO MATRIX) -->
       <section id="skills" class="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-3xl border-t border-outline-variant/30 dark:border-white/10">
         
-        <div class="flex flex-col items-start gap-space-xs mb-space-2xl">
+        <div class="flex flex-col items-start gap-space-xs mb-space-2xl overflow-hidden">
           <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Capabilities &amp; Stack]</span>
-          <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight">
+          <h2 class="scroll-slide-heading font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-white font-bold tracking-tight will-change-transform inline-block" data-direction="left">
             Technical Stack &amp; Skills
           </h2>
           <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-gray-400 max-w-2xl">
@@ -1119,9 +1105,9 @@
         
         <div class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
           
-          <div class="max-w-3xl flex flex-col gap-space-md">
+          <div class="max-w-3xl flex flex-col gap-space-md overflow-hidden">
             <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
-            <h2 class="font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight">
+            <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
               Let's engineer something exceptional together.
             </h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-gray-300">
@@ -1504,61 +1490,113 @@
       updateClock();
       setInterval(updateClock, 1000);
 
-      // 10. Aesthetic Scroll Sliding Parallax Animation for "Hriday Gupta"
+      // 10. Comprehensive Aesthetic Scroll Parallax & Sliding Engine
       const heroTrack = document.getElementById('hero-title-track');
       const heroWordFirst = document.getElementById('hero-word-first');
       const heroWordLast = document.getElementById('hero-word-last');
+      const photoWrapper = document.getElementById('about-photo-wrapper');
+      const slideHeadings = document.querySelectorAll('.scroll-slide-heading');
 
-      if (heroTrack) {
-        let currentX = 0;
-        let targetX = 0;
-        let currentSub = 0;
-        let targetSub = 0;
-        let isAnimating = false;
+      const headingStates = Array.from(slideHeadings).map(el => ({
+        el,
+        currentX: 0,
+        targetX: 0,
+        direction: el.getAttribute('data-direction') === 'right' ? 1 : -1
+      }));
 
-        function handleHeroScroll() {
-          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-          if (scrollY < 1200) {
-            // Horizontal glide rate as user scrolls down
-            targetX = scrollY * -0.42;
-            // Subtle cinematic divergence between the two names
-            targetSub = scrollY * 0.12;
-            if (!isAnimating) {
-              isAnimating = true;
-              requestAnimationFrame(renderHeroSlide);
-            }
+      let heroX = 0, targetHeroX = 0;
+      let heroSub = 0, targetHeroSub = 0;
+      let photoY = 0, targetPhotoY = 0;
+      let isRafActive = false;
+
+      function onScrollGlobal() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+
+        // 1. Hero Title Sliding
+        if (scrollY < 1200) {
+          targetHeroX = scrollY * -0.42;
+          targetHeroSub = scrollY * 0.12;
+        }
+
+        // 2. About Photo Parallax Float
+        if (photoWrapper) {
+          const rect = photoWrapper.getBoundingClientRect();
+          if (rect.top < windowHeight && rect.bottom > 0) {
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            targetPhotoY = (progress - 0.5) * -35;
           }
         }
 
-        function renderHeroSlide() {
-          // Buttery smooth lerp spring interpolation (60/120fps)
-          currentX += (targetX - currentX) * 0.1;
-          currentSub += (targetSub - currentSub) * 0.1;
+        // 3. Section Titles Sliding
+        headingStates.forEach(state => {
+          const rect = state.el.getBoundingClientRect();
+          if (rect.top < windowHeight + 100 && rect.bottom > -100) {
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            state.targetX = (progress - 0.5) * 60 * state.direction;
+          }
+        });
 
-          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (!isRafActive) {
+          isRafActive = true;
+          requestAnimationFrame(renderParallaxFrame);
+        }
+      }
+
+      function renderParallaxFrame() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        let needsNextFrame = false;
+
+        // 1. Hero Title Render
+        if (heroTrack && scrollY < 1300) {
+          heroX += (targetHeroX - heroX) * 0.1;
+          heroSub += (targetHeroSub - heroSub) * 0.1;
+
           const scale = Math.max(0.92, 1 - scrollY * 0.00025);
           const opacity = Math.max(0.35, 1 - scrollY * 0.0012);
 
-          heroTrack.style.transform = `translate3d(${currentX.toFixed(2)}px, 0, 0) scale(${scale.toFixed(4)})`;
+          heroTrack.style.transform = `translate3d(${heroX.toFixed(2)}px, 0, 0) scale(${scale.toFixed(4)})`;
           heroTrack.style.opacity = opacity.toFixed(3);
 
           if (heroWordFirst) {
-            heroWordFirst.style.transform = `translate3d(${(-currentSub).toFixed(2)}px, 0, 0)`;
+            heroWordFirst.style.transform = `translate3d(${(-heroSub).toFixed(2)}px, 0, 0)`;
           }
           if (heroWordLast) {
-            heroWordLast.style.transform = `translate3d(${currentSub.toFixed(2)}px, 0, 0)`;
+            heroWordLast.style.transform = `translate3d(${heroSub.toFixed(2)}px, 0, 0)`;
           }
 
-          if (Math.abs(targetX - currentX) > 0.05 || Math.abs(targetSub - currentSub) > 0.05) {
-            requestAnimationFrame(renderHeroSlide);
-          } else {
-            isAnimating = false;
+          if (Math.abs(targetHeroX - heroX) > 0.05 || Math.abs(targetHeroSub - heroSub) > 0.05) {
+            needsNextFrame = true;
           }
         }
 
-        window.addEventListener('scroll', handleHeroScroll, { passive: true });
-        handleHeroScroll();
+        // 2. About Photo Parallax Render
+        if (photoWrapper) {
+          photoY += (targetPhotoY - photoY) * 0.08;
+          photoWrapper.style.transform = `translate3d(0, ${photoY.toFixed(2)}px, 0)`;
+          if (Math.abs(targetPhotoY - photoY) > 0.05) {
+            needsNextFrame = true;
+          }
+        }
+
+        // 3. Section Titles Render
+        headingStates.forEach(state => {
+          state.currentX += (state.targetX - state.currentX) * 0.09;
+          state.el.style.transform = `translate3d(${state.currentX.toFixed(2)}px, 0, 0)`;
+          if (Math.abs(state.targetX - state.currentX) > 0.05) {
+            needsNextFrame = true;
+          }
+        });
+
+        if (needsNextFrame) {
+          requestAnimationFrame(renderParallaxFrame);
+        } else {
+          isRafActive = false;
+        }
       }
+
+      window.addEventListener('scroll', onScrollGlobal, { passive: true });
+      onScrollGlobal();
 
     })();
   </script>
