@@ -308,17 +308,30 @@
 
             </div>
 
-            <!-- Right Column: Image with top-edge white blend (unobstructed) -->
+            <!-- Right Column: Image with top-edge white blend & interactive hover reveal -->
             <div class="lg:col-span-5 flex justify-center lg:justify-end items-center w-full mt-space-lg lg:mt-0">
-              <div id="about-photo-wrapper" class="relative w-full max-w-[460px] aspect-[3/4] rounded-3xl lg:rounded-[2.25rem] overflow-hidden bg-surface-container dark:bg-black shadow-lg border border-outline-variant/30 dark:border-white/10 group perspective-container will-change-transform">
+              <div id="about-photo-wrapper" class="relative w-full max-w-[460px] aspect-[3/4] rounded-3xl lg:rounded-[2.25rem] overflow-hidden bg-surface-container dark:bg-black shadow-lg border border-outline-variant/30 dark:border-white/10 group perspective-container will-change-transform cursor-pointer select-none">
                 
-                <!-- Profile Photo -->
+                <!-- Primary Portrait Photo (Default State) -->
                 <img src="hriday-about.jpg" 
                      alt="Hriday Gupta" 
-                     class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+                     class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105 group-hover:opacity-0" />
+
+                <!-- Cinematic Alternative Photo (Revealed on Hover) -->
+                <img src="hriday-hover.jpg" 
+                     alt="Hriday Gupta - On The Road" 
+                     class="absolute inset-0 w-full h-full object-cover object-center scale-110 opacity-0 transition-all duration-700 ease-out group-hover:scale-100 group-hover:opacity-100" />
 
                 <!-- Top Edge White Blend Gradient Overlay -->
-                <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10"></div>
+                <div class="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-white via-white/50 to-transparent pointer-events-none z-10"></div>
+
+                <!-- Hover Micro-Indicator Pill -->
+                <div class="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-label-mono text-[10px] tracking-widest uppercase shadow-md">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>EXPLORING HORIZONS</span>
+                  </div>
+                </div>
 
               </div>
             </div>
