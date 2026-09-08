@@ -312,6 +312,71 @@
     .aurora-orb {
       will-change: transform;
     }
+
+    /* Linear-Style Glowing Border Tracing & Dynamic Surface Sheen */
+    .linear-glow-card {
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* 1. Dynamic Tracing Glowing Border using dual-gradient mask subtraction */
+    .linear-glow-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: radial-gradient(
+        360px circle at var(--glow-x, -1000px) var(--glow-y, -1000px),
+        rgba(2, 115, 235, 0.85),
+        rgba(0, 145, 65, 0.45) 40%,
+        transparent 70%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: var(--glow-opacity, 0);
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 25;
+    }
+
+    .dark .linear-glow-card::before {
+      background: radial-gradient(
+        360px circle at var(--glow-x, -1000px) var(--glow-y, -1000px),
+        rgba(56, 189, 248, 0.9),
+        rgba(74, 225, 118, 0.5) 35%,
+        rgba(168, 85, 247, 0.3) 55%,
+        transparent 72%
+      );
+    }
+
+    /* 2. Delicate Surface Ambient Spotlight Sheen */
+    .linear-glow-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        320px circle at var(--glow-x, -1000px) var(--glow-y, -1000px),
+        rgba(2, 115, 235, 0.035),
+        transparent 65%
+      );
+      pointer-events: none;
+      opacity: var(--glow-opacity, 0);
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+    }
+
+    .dark .linear-glow-card::after {
+      background: radial-gradient(
+        340px circle at var(--glow-x, -1000px) var(--glow-y, -1000px),
+        rgba(56, 189, 248, 0.05),
+        rgba(74, 225, 118, 0.02) 40%,
+        transparent 65%
+      );
+    }
   </style>
 </head>
 
@@ -743,7 +808,7 @@
              data-modal-tech="React.js, Node.js, Express.js, MongoDB, Tailwind CSS, REST APIs"
              data-modal-badge="LIVE APPLICATION"
              data-modal-github="https://github.com/hridaycode1119">
-          <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-lg sm:p-space-xl lg:p-space-2xl shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container border border-outline-variant/20 dark:border-white/5">
+          <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-lg sm:p-space-xl lg:p-space-2xl shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container border border-outline-variant/20 dark:border-white/5">
             
             <!-- Mockup Display Container -->
             <div class="relative w-full aspect-[16/9] lg:aspect-[21/10] rounded-2xl bg-[#0f172a] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-700 ease-out">
@@ -837,7 +902,7 @@
                data-modal-tech="Python 3.11+, Google Gemini 1.5, Streamlit 1.37+, Pydantic v2, Gmail REST API, OAuth 2.0, Hexagonal Architecture"
                data-modal-badge="AUTONOMOUS AGENT"
                data-modal-github="https://github.com/hridaycode1119/ENMA">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#0e101f] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <!-- Project Visual Preview -->
@@ -895,7 +960,7 @@
                data-modal-tech="Next.js 14, Three.js / React Three Fiber, FastAPI, Python, XGBoost, SHAP (XAI), PostgreSQL 16, Qdrant Vector DB, Docker"
                data-modal-badge="PREDICTIVE AI &amp; 3D"
                data-modal-github="https://github.com/hridaycode1119/digital-twin">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#041a1a] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <!-- Project Visual Preview -->
@@ -953,7 +1018,7 @@
                data-modal-tech="Python, PyTorch, Hugging Face, Ollama, PEFT/LoRA, LangChain"
                data-modal-badge="AI ARCHITECTURE"
                data-modal-github="https://github.com/hridaycode1119">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#121826] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <!-- Visual Canvas -->
@@ -1016,7 +1081,7 @@
                data-modal-tech="Python, Scikit-Learn, Pandas, NumPy, Matplotlib, Seaborn"
                data-modal-badge="INDUSTRY INTERNSHIP"
                data-modal-github="https://github.com/hridaycode1119">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#0d1b1e] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-br from-[#112429] via-[#09161a] to-[#040b0d] p-5 flex flex-col justify-between">
@@ -1078,7 +1143,7 @@
                data-modal-tech="HTML5, Tailwind CSS, Modern ES6+ JS, Responsive Architecture"
                data-modal-badge="CURRENT SHOWCASE"
                data-modal-github="https://github.com/hridaycode1119/Hriday-Gupta-Portfolio">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#1e1e1e] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-br from-[#292929] via-[#1a1a1a] to-[#0f0f0f] p-5 flex flex-col justify-between">
@@ -1140,7 +1205,7 @@
                data-modal-tech="JavaScript, React, Node.js, Express, Python, C, MySQL, Bootstrap"
                data-modal-badge="REPOSITORY SUITE"
                data-modal-github="https://github.com/hridaycode1119?tab=repositories">
-            <div class="group relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
+            <div class="group linear-glow-card relative rounded-[2rem] bg-surface-container-high dark:bg-[#1c1d1d] p-space-md sm:p-space-lg shadow-sm transition-all duration-500 ease-out hover:shadow-xl cursor-pointer perspective-container flex flex-col h-full border border-outline-variant/20 dark:border-white/5">
               
               <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#171923] overflow-hidden shadow-md flex items-center justify-center inner-mockup transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-br from-[#1d2235] via-[#131622] to-[#0b0c14] p-5 flex flex-col justify-between">
@@ -1214,7 +1279,7 @@
             <div class="flex flex-col gap-space-md">
               
               <!-- Experience Card: Alligneye -->
-              <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
+              <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-space-sm">
                   <div>
                     <span class="font-headline-lg text-2xl font-bold text-on-surface dark:text-white">Alligneye</span>
@@ -1274,7 +1339,7 @@
             <div class="flex flex-col gap-space-md">
               
               <!-- Degree: Sharda University -->
-              <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
+              <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-space-sm">
                   <div>
                     <span class="font-headline-lg text-2xl font-bold text-on-surface dark:text-white">Sharda University</span>
@@ -1344,7 +1409,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
           
           <!-- Card 1: Core Programming Languages -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">code</span>
@@ -1362,7 +1427,7 @@
           </div>
 
           <!-- Card 2: AI & LLM Systems -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">psychology</span>
@@ -1381,7 +1446,7 @@
           </div>
 
           <!-- Card 3: Frontend Development -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">web</span>
@@ -1399,7 +1464,7 @@
           </div>
 
           <!-- Card 4: Backend & APIs -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">dns</span>
@@ -1418,7 +1483,7 @@
           </div>
 
           <!-- Card 5: Databases & Storage -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">database</span>
@@ -1436,7 +1501,7 @@
           </div>
 
           <!-- Card 6: Developer Workflow & DSA -->
-          <div class="rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="linear-glow-card rounded-3xl bg-surface-container-lowest dark:bg-[#181919] p-space-xl border border-outline-variant/20 dark:border-white/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-2xl bg-surface-container dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-space-md">
                 <span class="material-symbols-outlined text-[22px]">build</span>
@@ -1460,7 +1525,7 @@
       <!-- CONTACT & INQUIRIES SECTION -->
       <section id="contact" class="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-3xl border-t border-outline-variant/30 dark:border-white/10">
         
-        <div id="contact-card" class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
+        <div id="contact-card" class="linear-glow-card relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
           <div class="relative z-10 max-w-3xl flex flex-col gap-space-md overflow-hidden">
             <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
             <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
@@ -2640,9 +2705,101 @@
         }
       }
 
+      // 14. Linear-Style Glowing Border Tracing Engine
+      function initLinearBorderGlow() {
+        const cards = Array.from(document.querySelectorAll('.linear-glow-card'));
+        if (!cards.length) return;
+
+        // Skip on devices without fine mouse pointer
+        if (window.matchMedia('(hover: none)').matches) return;
+
+        let rafPending = false;
+        let lastX = -1000;
+        let lastY = -1000;
+        const radius = 380; // Proximity detection radius in px
+
+        function updateCardGlows(clientX, clientY) {
+          const vh = window.innerHeight;
+          const vw = window.innerWidth;
+
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            const rect = card.getBoundingClientRect();
+
+            // Quick viewport culling
+            if (
+              rect.bottom < -radius ||
+              rect.top > vh + radius ||
+              rect.right < -radius ||
+              rect.left > vw + radius
+            ) {
+              card.style.setProperty('--glow-opacity', '0');
+              continue;
+            }
+
+            // Distance from cursor to nearest boundary of card rectangle
+            const dx = Math.max(rect.left - clientX, 0, clientX - rect.right);
+            const dy = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < radius) {
+              const localX = clientX - rect.left;
+              const localY = clientY - rect.top;
+              card.style.setProperty('--glow-x', `${localX.toFixed(1)}px`);
+              card.style.setProperty('--glow-y', `${localY.toFixed(1)}px`);
+              
+              // When inside the card: full intensity (1.0).
+              // When near the card: smooth organic quadratic falloff
+              const normalizedDist = dist / radius;
+              const intensity = dist === 0 ? 1 : Math.max(0, 1 - normalizedDist * normalizedDist);
+              card.style.setProperty('--glow-opacity', intensity.toFixed(2));
+            } else {
+              card.style.setProperty('--glow-opacity', '0');
+            }
+          }
+        }
+
+        function onMouseMove(e) {
+          lastX = e.clientX;
+          lastY = e.clientY;
+
+          if (rafPending) return;
+          rafPending = true;
+
+          requestAnimationFrame(() => {
+            rafPending = false;
+            updateCardGlows(lastX, lastY);
+          });
+        }
+
+        function onScroll() {
+          if (lastX < 0 && lastY < 0) return;
+          if (rafPending) return;
+          rafPending = true;
+
+          requestAnimationFrame(() => {
+            rafPending = false;
+            updateCardGlows(lastX, lastY);
+          });
+        }
+
+        function onMouseLeave() {
+          lastX = -1000;
+          lastY = -1000;
+          cards.forEach(card => {
+            card.style.setProperty('--glow-opacity', '0');
+          });
+        }
+
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
+        document.addEventListener('mouseleave', onMouseLeave, { passive: true });
+      }
+
       // Initialize Engines
       initScrambleEffect();
       initMagneticCursor();
+      initLinearBorderGlow();
       const soundEngine = new SoundEngine();
 
     })();
