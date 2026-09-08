@@ -2377,12 +2377,15 @@
             cancelAnimationFrame(el._scrambleAnimId);
           }
 
-          let frame = 0;
-          const totalFrames = 20; // ~320ms
+          // Strict time-based animation: capped at max 0.50 second (500ms) everywhere
+          const maxDuration = 500; // 0.50s max
+          const duration = Math.min(maxDuration, Math.max(280, originalText.length * 15));
+          const startTime = performance.now();
 
-          function step() {
-            frame++;
-            const progress = frame / totalFrames;
+          function step(timestamp) {
+            const now = timestamp || performance.now();
+            const elapsed = now - startTime;
+            const progress = Math.min(1, elapsed / duration);
             const revealedCount = Math.floor(progress * originalText.length);
 
             let result = '';
@@ -2399,7 +2402,7 @@
 
             el.textContent = result;
 
-            if (frame < totalFrames) {
+            if (progress < 1) {
               el._scrambleAnimId = requestAnimationFrame(step);
             } else {
               el.textContent = originalText;
