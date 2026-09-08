@@ -401,8 +401,8 @@
   <!-- Interactive Neural Constellation Particle Canvas (Full Website Viewport) -->
   <canvas id="global-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 select-none"></canvas>
 
-  <!-- Interactive Ambient Mouse Spotlight -->
-  <div id="ambient-glow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.035)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.045)_0%,transparent_70%)] blur-2xl z-0 transition-opacity duration-500 opacity-0 md:opacity-100"></div>
+  <!-- Interactive Ambient Mouse Spotlight (Shades of Gray) -->
+  <div id="ambient-glow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(35,40,50,0.04)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(220,225,230,0.045)_0%,transparent_70%)] blur-2xl z-0 transition-opacity duration-500 opacity-0 md:opacity-100"></div>
 
   <!-- FIXED TOP NAVIGATION BAR -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 dark:bg-[#111212]/85 backdrop-blur-md border-b border-outline-variant/30 dark:border-white/10 transition-colors duration-300">
@@ -2246,19 +2246,21 @@
             : (isMobile ? 85 : 110);
           const cursorDist = isMobile ? 120 : 155;
 
-          // 1. Soft Mouse Aura Spotlight
+          // 1. Soft Mouse Aura Spotlight (Refined Shades of Gray)
           if (this.mouse.active) {
             const aura = this.ctx.createRadialGradient(
               this.mouse.x, this.mouse.y, 0,
               this.mouse.x, this.mouse.y, cursorDist
             );
             if (this.isDark) {
-              aura.addColorStop(0, 'rgba(56, 189, 248, 0.07)');
-              aura.addColorStop(0.5, 'rgba(74, 225, 118, 0.025)');
+              // Ethereal silver-gray aura in Dark Mode
+              aura.addColorStop(0, 'rgba(220, 225, 230, 0.08)');
+              aura.addColorStop(0.5, 'rgba(145, 150, 160, 0.03)');
               aura.addColorStop(1, 'rgba(0, 0, 0, 0)');
             } else {
-              aura.addColorStop(0, 'rgba(0, 145, 65, 0.08)');
-              aura.addColorStop(0.5, 'rgba(15, 23, 42, 0.03)');
+              // Soft graphite-gray aura in Light Mode
+              aura.addColorStop(0, 'rgba(35, 40, 50, 0.065)');
+              aura.addColorStop(0.5, 'rgba(115, 120, 130, 0.025)');
               aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
             }
             this.ctx.fillStyle = aura;
