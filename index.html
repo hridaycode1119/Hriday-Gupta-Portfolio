@@ -333,6 +333,9 @@
     <div class="aurora-orb absolute -bottom-32 left-1/4 w-[45rem] h-[40rem] rounded-full bg-gradient-to-tr from-amber-400/10 via-emerald-400/10 to-transparent dark:from-purple-500/12 dark:via-indigo-500/10 dark:to-transparent blur-[130px] animate-[aurora-drift-3_32s_ease-in-out_infinite_alternate]"></div>
   </div>
 
+  <!-- Interactive Neural Constellation Particle Canvas (Full Website Viewport) -->
+  <canvas id="global-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 select-none"></canvas>
+
   <!-- Interactive Ambient Mouse Spotlight -->
   <div id="ambient-glow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.035)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.045)_0%,transparent_70%)] blur-2xl z-0 transition-opacity duration-500 opacity-0 md:opacity-100"></div>
 
@@ -414,14 +417,11 @@
   </header>
 
   <!-- MAIN WRAPPER -->
-  <main class="relative z-10 w-full pt-16 bg-surface dark:bg-[#111212] transition-colors duration-300">
+  <main class="relative z-10 w-full pt-16 bg-transparent transition-colors duration-300">
     <div class="flex flex-col w-full">
 
       <!-- HERO SECTION -->
       <section id="hero" class="relative w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop pt-space-xl pb-space-2xl flex flex-col justify-center min-h-[calc(88vh-4rem)] overflow-hidden">
-        
-        <!-- Interactive AI Neural Constellation Particle Canvas Background -->
-        <canvas id="hero-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] opacity-100 dark:opacity-90"></canvas>
         
         <!-- Monumental Hero Display Title with Scroll Sliding Animation -->
         <div class="relative z-10 w-full flex items-center justify-center py-space-xl overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
@@ -1461,10 +1461,6 @@
       <section id="contact" class="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-3xl border-t border-outline-variant/30 dark:border-white/10">
         
         <div id="contact-card" class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
-          
-          <!-- Interactive Particle Canvas in Contact Card -->
-          <canvas id="contact-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70 dark:opacity-65"></canvas>
-
           <div class="relative z-10 max-w-3xl flex flex-col gap-space-md overflow-hidden">
             <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
             <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
@@ -1566,7 +1562,7 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="relative z-10 w-full border-t border-outline-variant/30 dark:border-white/10 bg-surface-container-lowest dark:bg-[#111212] transition-colors duration-300">
+  <footer class="relative z-10 w-full border-t border-outline-variant/30 dark:border-white/10 bg-surface-container-lowest/80 dark:bg-[#111212]/80 backdrop-blur-md transition-colors duration-300">
     <div class="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-lg text-on-surface-variant dark:text-gray-400">
       
       <!-- Left Copyright & IST Live Clock -->
@@ -1986,29 +1982,19 @@
       onScrollGlobal();
 
       // 11. Interactive Neural Constellation Particle System Engine
+      // 11. Interactive Neural Constellation Particle System Engine (Global Viewport)
       class ParticleNetwork {
-        constructor(canvasId, containerId, options = {}) {
+        constructor(canvasId = 'global-particle-canvas') {
           this.canvas = document.getElementById(canvasId);
           if (!this.canvas) return;
-          this.container = document.getElementById(containerId) || this.canvas.parentElement;
           this.ctx = this.canvas.getContext('2d');
           if (!this.ctx) return;
-
-          this.options = Object.assign({
-            particleDensity: 0.000042,
-            maxParticles: 85,
-            minParticles: 28,
-            maxDistance: 110,
-            cursorDistance: 140,
-            repulsionStrength: 1.1,
-            baseSpeed: 0.32,
-          }, options);
 
           this.particles = [];
           this.burstParticles = [];
           this.mouse = { x: -2000, y: -2000, active: false };
-          this.width = 0;
-          this.height = 0;
+          this.width = window.innerWidth;
+          this.height = window.innerHeight;
           this.dpr = Math.min(window.devicePixelRatio || 1, 2);
           this.animationFrameId = null;
           this.isVisible = true;
@@ -2028,10 +2014,9 @@
         }
 
         resize() {
-          if (!this.container || !this.canvas) return;
-          const rect = this.container.getBoundingClientRect();
-          this.width = Math.max(rect.width, 300);
-          this.height = Math.max(rect.height, 300);
+          if (!this.canvas) return;
+          this.width = window.innerWidth;
+          this.height = window.innerHeight;
           this.canvas.width = Math.floor(this.width * this.dpr);
           this.canvas.height = Math.floor(this.height * this.dpr);
           this.canvas.style.width = this.width + 'px';
@@ -2040,18 +2025,20 @@
         }
 
         createParticles() {
-          const area = this.width * this.height;
-          let count = Math.floor(area * this.options.particleDensity);
-          count = Math.max(this.options.minParticles, Math.min(this.options.maxParticles, count));
+          const isMobile = this.width < 768;
+          // Enhanced particle density in Dark Mode; refined density in Light Mode
+          let count = this.isDark ? (isMobile ? 55 : 120) : (isMobile ? 35 : 75);
 
-          if (this.width < 768) {
-            count = Math.floor(count * 0.55);
+          const areaRatio = (this.width * this.height) / (1920 * 1080);
+          if (areaRatio > 1.15 && !isMobile) {
+            count = Math.floor(count * Math.min(1.35, Math.sqrt(areaRatio)));
           }
 
           this.particles = [];
+          const baseSpeed = this.isDark ? 0.35 : 0.3;
           for (let i = 0; i < count; i++) {
             const isHub = Math.random() < 0.12;
-            const speedMultiplier = (0.5 + Math.random() * 0.8) * this.options.baseSpeed;
+            const speedMultiplier = (0.5 + Math.random() * 0.8) * baseSpeed;
             const angle = Math.random() * Math.PI * 2;
 
             this.particles.push({
@@ -2059,9 +2046,9 @@
               y: Math.random() * this.height,
               vx: Math.cos(angle) * speedMultiplier,
               vy: Math.sin(angle) * speedMultiplier,
-              radius: isHub ? (2.4 + Math.random() * 0.8) : (1.2 + Math.random() * 0.9),
+              radius: isHub ? (2.4 + Math.random() * 0.8) : (1.1 + Math.random() * 0.8),
               isHub: isHub,
-              baseAlpha: isHub ? 0.75 : (0.25 + Math.random() * 0.45),
+              baseAlpha: isHub ? 0.75 : (0.26 + Math.random() * 0.42),
               pulseOffset: Math.random() * Math.PI * 2,
               colorIndex: Math.floor(Math.random() * 3) // 0: primary, 1: secondary/emerald, 2: accent/cyan
             });
@@ -2078,66 +2065,58 @@
             }, 150);
           }, { passive: true });
 
-          // Mouse tracking
-          this.container.addEventListener('mousemove', (e) => {
-            const rect = this.canvas.getBoundingClientRect();
-            this.mouse.x = e.clientX - rect.left;
-            this.mouse.y = e.clientY - rect.top;
+          // Mouse tracking across full window
+          window.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY;
             this.mouse.active = true;
           }, { passive: true });
 
-          this.container.addEventListener('mouseleave', () => {
+          window.addEventListener('mouseleave', () => {
             this.mouse.active = false;
             this.mouse.x = -2000;
             this.mouse.y = -2000;
           }, { passive: true });
 
-          // Touch tracking
-          this.container.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-              const rect = this.canvas.getBoundingClientRect();
-              this.mouse.x = e.touches[0].clientX - rect.left;
-              this.mouse.y = e.touches[0].clientY - rect.top;
+          // Touch tracking across full window
+          window.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches.length > 0) {
+              this.mouse.x = e.touches[0].clientX;
+              this.mouse.y = e.touches[0].clientY;
               this.mouse.active = true;
             }
           }, { passive: true });
 
-          this.container.addEventListener('touchend', () => {
+          window.addEventListener('touchend', () => {
             this.mouse.active = false;
             this.mouse.x = -2000;
             this.mouse.y = -2000;
           }, { passive: true });
 
-          // Click / Tap Spark Burst
-          this.container.addEventListener('click', (e) => {
-            if (e.target.closest('a, button, input, textarea, select')) return;
-            const rect = this.canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-            this.spawnBurst(clickX, clickY);
+          // Click / Tap Spark Burst across full window
+          window.addEventListener('click', (e) => {
+            if (e.target.closest('a, button, input, textarea, select, [role="button"]')) return;
+            this.spawnBurst(e.clientX, e.clientY);
           }, { passive: true });
 
-          // IntersectionObserver to suspend animation when off-screen
-          if ('IntersectionObserver' in window) {
-            const io = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  this.isVisible = true;
-                  this.start();
-                } else {
-                  this.isVisible = false;
-                  this.stop();
+          // Dynamically adjust particle density when theme is toggled between dark and light
+          if ('MutationObserver' in window) {
+            const themeObserver = new MutationObserver((mutations) => {
+              for (const mutation of mutations) {
+                if (mutation.attributeName === 'class') {
+                  this.createParticles();
+                  break;
                 }
-              });
-            }, { threshold: 0.05 });
-            io.observe(this.container);
+              }
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
           }
 
-          // Document visibility to suspend animation when tab is inactive
+          // Tab visibility management to preserve battery & GPU cycles
           document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
               this.stop();
-            } else if (this.isVisible) {
+            } else {
               this.start();
             }
           });
@@ -2153,9 +2132,9 @@
               y: y,
               vx: Math.cos(angle) * speed,
               vy: Math.sin(angle) * speed,
-              radius: 1.5 + Math.random() * 1.5,
+              radius: 1.4 + Math.random() * 1.4,
               life: 1.0,
-              decay: 0.02 + Math.random() * 0.02,
+              decay: 0.022 + Math.random() * 0.022,
               colorIndex: Math.floor(Math.random() * 3)
             });
           }
@@ -2169,7 +2148,7 @@
             return `rgba(56, 189, 248, ${alpha.toFixed(3)})`;
           } else {
             // Enhanced high-contrast Light Mode colors: Deep obsidian ink, tech emerald, royal blue
-            const boostedAlpha = Math.min(1.0, alpha * 1.55 + 0.26);
+            const boostedAlpha = Math.min(1.0, alpha * 1.45 + 0.22);
             if (index === 0) return `rgba(15, 23, 42, ${boostedAlpha.toFixed(3)})`;
             if (index === 1) return `rgba(0, 145, 65, ${boostedAlpha.toFixed(3)})`;
             return `rgba(2, 115, 235, ${boostedAlpha.toFixed(3)})`;
@@ -2195,8 +2174,12 @@
           this.ctx.clearRect(0, 0, this.width, this.height);
 
           const now = performance.now() * 0.002;
-          const maxDist = this.width < 768 ? (this.options.maxDistance * 0.8) : this.options.maxDistance;
-          const cursorDist = this.options.cursorDistance;
+          const isMobile = this.width < 768;
+          // Connection distance and cursor attraction
+          const maxDist = this.isDark
+            ? (isMobile ? 95 : 125)
+            : (isMobile ? 85 : 110);
+          const cursorDist = isMobile ? 120 : 155;
 
           // 1. Soft Mouse Aura Spotlight
           if (this.mouse.active) {
@@ -2205,12 +2188,12 @@
               this.mouse.x, this.mouse.y, cursorDist
             );
             if (this.isDark) {
-              aura.addColorStop(0, 'rgba(56, 189, 248, 0.08)');
-              aura.addColorStop(0.5, 'rgba(74, 225, 118, 0.03)');
+              aura.addColorStop(0, 'rgba(56, 189, 248, 0.07)');
+              aura.addColorStop(0.5, 'rgba(74, 225, 118, 0.025)');
               aura.addColorStop(1, 'rgba(0, 0, 0, 0)');
             } else {
-              aura.addColorStop(0, 'rgba(0, 145, 65, 0.12)');
-              aura.addColorStop(0.5, 'rgba(15, 23, 42, 0.05)');
+              aura.addColorStop(0, 'rgba(0, 145, 65, 0.08)');
+              aura.addColorStop(0.5, 'rgba(15, 23, 42, 0.03)');
               aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
             }
             this.ctx.fillStyle = aura;
@@ -2230,19 +2213,19 @@
               const dist = Math.hypot(dx, dy);
 
               if (dist < cursorDist && dist > 0) {
-                const force = (1 - dist / cursorDist) * this.options.repulsionStrength;
+                const force = (1 - dist / cursorDist) * 1.1;
                 const normalX = dx / dist;
                 const normalY = dy / dist;
                 p.x += normalX * force * 1.5;
                 p.y += normalY * force * 1.5;
 
-                // Connecting laser filament to cursor
-                const cursorAlpha = (1 - dist / cursorDist) * (this.isDark ? 0.35 : 0.48);
+                // Connecting laser filament to cursor: thinner in light mode (0.55px vs 0.75px in dark)
+                const cursorAlpha = (1 - dist / cursorDist) * (this.isDark ? 0.35 : 0.32);
                 this.ctx.beginPath();
                 this.ctx.moveTo(p.x, p.y);
                 this.ctx.lineTo(this.mouse.x, this.mouse.y);
                 this.ctx.strokeStyle = this.getColor(1, cursorAlpha);
-                this.ctx.lineWidth = this.isDark ? 0.75 : 1.1;
+                this.ctx.lineWidth = this.isDark ? 0.75 : 0.55;
                 this.ctx.stroke();
               }
             }
@@ -2251,8 +2234,8 @@
             p.x += p.vx;
             p.y += p.vy;
 
-            // Soft Wrap
-            const margin = 12;
+            // Soft Wrap around viewport margins
+            const margin = 15;
             if (p.x < -margin) p.x = this.width + margin;
             if (p.x > this.width + margin) p.x = -margin;
             if (p.y < -margin) p.y = this.height + margin;
@@ -2263,14 +2246,14 @@
             if (p.isHub) {
               currentAlpha = p.baseAlpha * (0.8 + 0.2 * Math.sin(now + p.pulseOffset));
             }
-            const nodeRadius = this.isDark ? p.radius : (p.radius * 1.25);
+            const nodeRadius = this.isDark ? p.radius : (p.radius * 1.15);
 
             this.ctx.beginPath();
             this.ctx.arc(p.x, p.y, nodeRadius, 0, Math.PI * 2);
             this.ctx.fillStyle = this.getColor(p.colorIndex, currentAlpha);
             this.ctx.fill();
 
-            // Connections between neighbors
+            // Inter-node connections: Thinner lines in light mode (0.5px vs 0.7px in dark)
             for (let j = i + 1; j < this.particles.length; j++) {
               const p2 = this.particles[j];
               const dx = p.x - p2.x;
@@ -2278,14 +2261,14 @@
               const dist = Math.hypot(dx, dy);
 
               if (dist < maxDist) {
-                const lineAlpha = (1 - dist / maxDist) * (this.isDark ? 0.16 : 0.24);
+                const lineAlpha = (1 - dist / maxDist) * (this.isDark ? 0.17 : 0.12);
                 this.ctx.beginPath();
                 this.ctx.moveTo(p.x, p.y);
                 this.ctx.lineTo(p2.x, p2.y);
                 this.ctx.strokeStyle = this.isDark 
                   ? `rgba(255, 255, 255, ${lineAlpha.toFixed(3)})` 
                   : `rgba(15, 23, 42, ${lineAlpha.toFixed(3)})`;
-                this.ctx.lineWidth = this.isDark ? 0.65 : 0.95;
+                this.ctx.lineWidth = this.isDark ? 0.7 : 0.5;
                 this.ctx.stroke();
               }
             }
@@ -2313,22 +2296,8 @@
         }
       }
 
-      // Initialize Particle Networks
-      const heroParticles = new ParticleNetwork('hero-particle-canvas', 'hero', {
-        particleDensity: 0.000045,
-        maxParticles: 85,
-        minParticles: 30,
-        maxDistance: 115,
-        cursorDistance: 150,
-      });
-
-      const contactParticles = new ParticleNetwork('contact-particle-canvas', 'contact-card', {
-        particleDensity: 0.000035,
-        maxParticles: 45,
-        minParticles: 18,
-        maxDistance: 95,
-        cursorDistance: 120,
-      });
+      // Initialize Global Particle Network across whole website
+      const globalParticles = new ParticleNetwork('global-particle-canvas');
 
       // 12. Hacker / AI Text Decryption Scramble Engine (Scroll-Triggered Once + Interactive Hover)
       function initScrambleEffect() {
