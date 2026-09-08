@@ -181,11 +181,128 @@
       opacity: 1;
       transform: scale(1);
     }
+
+    /* Custom Magnetic Cursor & Dynamic Hover Lens */
+    @media (pointer: fine) {
+      body.has-custom-cursor,
+      body.has-custom-cursor a,
+      body.has-custom-cursor button,
+      body.has-custom-cursor [role="button"],
+      body.has-custom-cursor .cursor-pointer {
+        cursor: none !important;
+      }
+    }
+
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, transform 0.15s ease-out;
+      mix-blend-mode: difference;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.2s ease,
+                  border-color 0.2s ease,
+                  border-radius 0.22s ease,
+                  opacity 0.2s ease;
+      will-change: transform, width, height;
+    }
+
+    /* State: Default */
+    #cursor-ring.cursor-default {
+      border: 1.5px solid rgba(0, 0, 0, 0.35);
+      background-color: transparent;
+    }
+    .dark #cursor-ring.cursor-default {
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+    }
+
+    /* State: Interactive Hover (Links, Buttons, Tabs) */
+    #cursor-ring.cursor-hover {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0, 0, 0, 0.08);
+      border: 1.5px solid transparent;
+    }
+    .dark #cursor-ring.cursor-hover {
+      background-color: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid transparent;
+    }
+
+    /* State: Project Card Hover Lens (Pill Badge) */
+    #cursor-ring.cursor-card {
+      width: 112px;
+      height: 38px;
+      border-radius: 9999px;
+      background-color: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    .dark #cursor-ring.cursor-card {
+      background-color: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    #cursor-ring.cursor-card #cursor-label {
+      color: #ffffff;
+    }
+    .dark #cursor-ring.cursor-card #cursor-label {
+      color: #000000;
+    }
+
+    /* State: Photo Hover Lens */
+    #cursor-ring.cursor-photo {
+      width: 100px;
+      height: 36px;
+      border-radius: 9999px;
+      background-color: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.4);
+    }
+    .dark #cursor-ring.cursor-photo {
+      background-color: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.6);
+    }
+    #cursor-ring.cursor-photo #cursor-label {
+      color: #ffffff;
+    }
+    .dark #cursor-ring.cursor-photo #cursor-label {
+      color: #000000;
+    }
   </style>
 </head>
 
 <body class="bg-background dark:bg-[#111212] font-body-md text-on-surface dark:text-[#f0f1f1] antialiased selection:bg-primary dark:selection:bg-white selection:text-on-primary dark:selection:text-black relative min-h-screen transition-colors duration-300">
   
+  <!-- Custom Magnetic Cursor & Dynamic Hover Lens (Desktop Pointer Devices Only) -->
+  <div id="cursor-dot" class="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-white pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 opacity-0 hidden md:block mix-blend-difference"></div>
+  <div id="cursor-ring" class="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-[width,height,background-color,border-color,opacity,border-radius] duration-200 ease-out opacity-0 hidden md:flex items-center justify-center cursor-default">
+    <span id="cursor-label" class="font-label-mono text-[9px] uppercase tracking-widest font-bold opacity-0 transition-opacity duration-150 select-none pointer-events-none"></span>
+  </div>
+
   <!-- Interactive Ambient Mouse Spotlight -->
   <div id="ambient-glow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.035)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.045)_0%,transparent_70%)] blur-2xl z-0 transition-opacity duration-500 opacity-0 md:opacity-100"></div>
 
@@ -201,19 +318,19 @@
       <!-- Brand Anchor -->
       <div class="flex items-center gap-space-sm">
         <a href="#hero" class="font-nav-link text-nav-link font-bold tracking-tight text-on-surface dark:text-white hover:opacity-80 transition-opacity flex items-center gap-space-2xs">
-          <span class="text-base tracking-tight font-extrabold uppercase">Hriday Gupta</span>
+          <span class="scramble-hover text-base tracking-tight font-extrabold uppercase">Hriday Gupta</span>
           <span class="font-label-mono text-[10px] text-secondary dark:text-gray-400 font-normal px-2 py-0.5 rounded bg-surface-container-low dark:bg-white/10 ml-1 hidden sm:inline-block">CSE (AIML)</span>
         </a>
       </div>
 
       <!-- Center Nav Pills -->
       <nav class="hidden md:flex items-center gap-space-2xs p-space-2xs rounded-full bg-surface-container-low/80 dark:bg-white/5 border border-outline-variant/30 dark:border-white/10 text-on-surface-variant dark:text-gray-300">
-        <a href="#about" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">About</a>
-        <a href="#projects" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Projects</a>
-        <a href="#experience" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Experience</a>
-        <a href="#education" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Education</a>
-        <a href="#skills" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Skills</a>
-        <a href="#contact" class="px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Contact</a>
+        <a href="#about" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">About</a>
+        <a href="#projects" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Projects</a>
+        <a href="#experience" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Experience</a>
+        <a href="#education" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Education</a>
+        <a href="#skills" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Skills</a>
+        <a href="#contact" class="scramble-hover px-space-sm py-1.5 rounded-full font-nav-link text-nav-link hover:text-on-surface dark:hover:text-white hover:bg-surface-container-highest/60 dark:hover:bg-white/10 transition-all">Contact</a>
       </nav>
 
       <!-- Right Actions: Status Pill, Theme Toggle, Resume CTA -->
@@ -280,9 +397,9 @@
         <div class="relative z-10 w-full flex items-center justify-center py-space-xl overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
           <div id="hero-title-track" class="will-change-transform flex items-center justify-center whitespace-nowrap">
             <h1 id="hero-title" class="font-display-xl text-display-xl-mobile sm:text-[76px] lg:text-display-xl text-primary dark:text-white font-extrabold uppercase tracking-tight text-center leading-none scale-y-105 cursor-default select-none transition-all duration-300">
-              <span id="hero-word-first" class="inline-block will-change-transform">Hriday</span>
+              <span id="hero-word-first" class="inline-block will-change-transform scramble-hover">Hriday</span>
               <span class="inline-block mx-2 sm:mx-3 select-none">&nbsp;</span>
-              <span id="hero-word-last" class="inline-block will-change-transform">Gupta</span>
+              <span id="hero-word-last" class="inline-block will-change-transform scramble-hover">Gupta</span>
             </h1>
           </div>
         </div>
@@ -312,7 +429,7 @@
             <!-- Left Column: About text shifted to the left -->
             <div class="lg:col-span-7 flex flex-col items-start text-left">
               
-              <span class="font-label-mono text-label-mono uppercase text-secondary dark:text-gray-400 tracking-widest mb-space-sm">[About Me // Engineering Identity]</span>
+              <span class="scramble-hover font-label-mono text-label-mono uppercase text-secondary dark:text-gray-400 tracking-widest mb-space-sm cursor-pointer">[About Me // Engineering Identity]</span>
 
               <p class="font-statement-lead text-statement-lead-mobile md:text-statement-lead font-semibold text-on-surface dark:text-white leading-tight tracking-tight">
                 <span class="text-secondary dark:text-gray-500 font-light select-none">[</span>Final-year B.Tech Computer Science (AI &amp; ML) student at Sharda University, engineer &amp; 
@@ -2179,6 +2296,197 @@
         maxDistance: 95,
         cursorDistance: 120,
       });
+
+      // 12. Hacker / AI Text Decryption Scramble Engine
+      function initScrambleEffect() {
+        const glyphs = '0123456789ABCDEF!@#$%&*<>[]{}~=+_';
+        const targetElements = document.querySelectorAll('.scramble-hover, .filter-tab, [data-scramble]');
+
+        targetElements.forEach(el => {
+          if (el.dataset.scrambleReady) return;
+          el.dataset.scrambleReady = 'true';
+
+          // Store original text safely
+          const originalText = el.getAttribute('data-original-text') || el.textContent.trim();
+          el.setAttribute('data-original-text', originalText);
+
+          let frame = 0;
+          let animId = null;
+          let isRunning = false;
+
+          const scramble = () => {
+            if (isRunning) cancelAnimationFrame(animId);
+            isRunning = true;
+            frame = 0;
+            const totalFrames = 18; // ~300ms at 60fps
+
+            function step() {
+              frame++;
+              const progress = frame / totalFrames;
+              const revealedCount = Math.floor(progress * originalText.length);
+
+              let result = '';
+              for (let i = 0; i < originalText.length; i++) {
+                const ch = originalText[i];
+                if (ch === ' ' || ch === '\n' || ch === '\t') {
+                  result += ch;
+                } else if (i < revealedCount) {
+                  result += ch;
+                } else {
+                  result += glyphs[Math.floor(Math.random() * glyphs.length)];
+                }
+              }
+
+              el.textContent = result;
+
+              if (frame < totalFrames) {
+                animId = requestAnimationFrame(step);
+              } else {
+                el.textContent = originalText;
+                isRunning = false;
+              }
+            }
+
+            animId = requestAnimationFrame(step);
+          };
+
+          el.addEventListener('mouseenter', scramble, { passive: true });
+        });
+      }
+
+      // 13. Magnetic Custom Cursor & Dynamic Hover Lens Engine
+      function initMagneticCursor() {
+        // Only run on desktop pointer devices
+        if (!window.matchMedia('(pointer: fine)').matches) return;
+
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        const label = document.getElementById('cursor-label');
+        if (!dot || !ring || !label) return;
+
+        document.body.classList.add('has-custom-cursor');
+
+        let mouseX = -100;
+        let mouseY = -100;
+        let ringX = -100;
+        let ringY = -100;
+        let isVisible = false;
+        let currentTargetEl = null;
+
+        // Track mouse position
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+
+          if (!isVisible) {
+            isVisible = true;
+            dot.style.opacity = '1';
+            ring.style.opacity = '1';
+          }
+        }, { passive: true });
+
+        // Fade out on window exit
+        document.addEventListener('mouseleave', () => {
+          isVisible = false;
+          dot.style.opacity = '0';
+          ring.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+          isVisible = true;
+          dot.style.opacity = '1';
+          ring.style.opacity = '1';
+        });
+
+        // Click compression feedback
+        window.addEventListener('mousedown', () => {
+          ring.style.transform = 'translate(-50%, -50%) scale(0.88)';
+        });
+        window.addEventListener('mouseup', () => {
+          ring.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+
+        // Hover target detection with event delegation
+        document.addEventListener('mouseover', (e) => {
+          const target = e.target;
+
+          // 1. Project Card Lens Mode
+          const projectCard = target.closest('.project-item, .perspective-container');
+          if (projectCard && !target.closest('a, button')) {
+            currentTargetEl = null;
+            ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-card';
+            label.textContent = 'EXPLORE ↗';
+            label.style.opacity = '1';
+            dot.style.opacity = '0';
+            return;
+          }
+
+          // 2. Profile Photo Lens Mode
+          const photoWrapper = target.closest('#about-photo-wrapper');
+          if (photoWrapper) {
+            currentTargetEl = null;
+            ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-photo';
+            label.textContent = 'REVEAL ↺';
+            label.style.opacity = '1';
+            dot.style.opacity = '0';
+            return;
+          }
+
+          // 3. Interactive Buttons, Links, Pills, Icons
+          const interactive = target.closest('a, button, input, textarea, select, .filter-tab, #theme-toggle, [role="button"], .scramble-hover');
+          if (interactive) {
+            currentTargetEl = interactive;
+            ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-hover';
+            label.textContent = '';
+            label.style.opacity = '0';
+            if (isVisible) dot.style.opacity = '1';
+            return;
+          }
+
+          // 4. Default State
+          currentTargetEl = null;
+          ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-default';
+          label.textContent = '';
+          label.style.opacity = '0';
+          if (isVisible) dot.style.opacity = '1';
+        });
+
+        // Physics animation loop
+        function renderCursor() {
+          let targetX = mouseX;
+          let targetY = mouseY;
+
+          // Magnetic pull towards center of interactive button
+          if (currentTargetEl) {
+            const rect = currentTargetEl.getBoundingClientRect();
+            if (rect.width < 220 && rect.height < 90) {
+              const centerX = rect.left + rect.width / 2;
+              const centerY = rect.top + rect.height / 2;
+              targetX += (centerX - mouseX) * 0.28;
+              targetY += (centerY - mouseY) * 0.28;
+            }
+          }
+
+          // Dot follows immediately
+          dot.style.left = `${mouseX}px`;
+          dot.style.top = `${mouseY}px`;
+
+          // Ring follows with spring lerp
+          ringX += (targetX - ringX) * 0.18;
+          ringY += (targetY - ringY) * 0.18;
+
+          ring.style.left = `${ringX.toFixed(2)}px`;
+          ring.style.top = `${ringY.toFixed(2)}px`;
+
+          requestAnimationFrame(renderCursor);
+        }
+
+        requestAnimationFrame(renderCursor);
+      }
+
+      // Initialize Scramble & Cursor Engines
+      initScrambleEffect();
+      initMagneticCursor();
 
     })();
   </script>
