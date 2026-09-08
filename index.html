@@ -292,6 +292,26 @@
     .dark #cursor-ring.cursor-photo #cursor-label {
       color: #000000;
     }
+
+    /* Ambient Mesh Gradient Aurora Keyframes */
+    @keyframes aurora-drift-1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(60px, 45px, 0) scale(1.08); }
+      100% { transform: translate3d(-35px, 75px, 0) scale(0.94); }
+    }
+    @keyframes aurora-drift-2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-55px, -65px, 0) scale(1.12); }
+      100% { transform: translate3d(45px, 35px, 0) scale(0.92); }
+    }
+    @keyframes aurora-drift-3 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(45px, -45px, 0) scale(1.06); }
+      100% { transform: translate3d(-55px, 25px, 0) scale(0.96); }
+    }
+    .aurora-orb {
+      will-change: transform;
+    }
   </style>
 </head>
 
@@ -303,13 +323,18 @@
     <span id="cursor-label" class="font-label-mono text-[9px] uppercase tracking-widest font-bold opacity-0 transition-opacity duration-150 select-none pointer-events-none"></span>
   </div>
 
+  <!-- Ambient Mesh Gradient Aurora Glow (Floating Multi-Layered Orbs) -->
+  <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none">
+    <!-- Top-Left Aurora Orb (Emerald / Mint) -->
+    <div class="aurora-orb absolute -top-24 -left-20 w-[42rem] h-[42rem] rounded-full bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-transparent dark:from-emerald-400/15 dark:via-cyan-500/10 dark:to-transparent blur-[110px] animate-[aurora-drift-1_24s_ease-in-out_infinite_alternate]"></div>
+    <!-- Center-Right Aurora Orb (Sky / Indigo) -->
+    <div class="aurora-orb absolute top-1/3 -right-28 w-[38rem] h-[38rem] rounded-full bg-gradient-to-bl from-sky-400/12 via-indigo-400/10 to-transparent dark:from-sky-500/15 dark:via-blue-600/10 dark:to-transparent blur-[120px] animate-[aurora-drift-2_28s_ease-in-out_infinite_alternate]"></div>
+    <!-- Bottom-Left Aurora Orb (Amber / Violet) -->
+    <div class="aurora-orb absolute -bottom-32 left-1/4 w-[45rem] h-[40rem] rounded-full bg-gradient-to-tr from-amber-400/10 via-emerald-400/10 to-transparent dark:from-purple-500/12 dark:via-indigo-500/10 dark:to-transparent blur-[130px] animate-[aurora-drift-3_32s_ease-in-out_infinite_alternate]"></div>
+  </div>
+
   <!-- Interactive Ambient Mouse Spotlight -->
   <div id="ambient-glow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.035)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.045)_0%,transparent_70%)] blur-2xl z-0 transition-opacity duration-500 opacity-0 md:opacity-100"></div>
-
-  <!-- Ambient Backdrop Glow -->
-  <div class="pointer-events-none fixed inset-0 z-0 flex items-center justify-center overflow-hidden opacity-70 dark:opacity-30">
-    <div class="w-[70rem] h-[35rem] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)] blur-3xl"></div>
-  </div>
 
   <!-- FIXED TOP NAVIGATION BAR -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 dark:bg-[#111212]/85 backdrop-blur-md border-b border-outline-variant/30 dark:border-white/10 transition-colors duration-300">
@@ -346,8 +371,13 @@
         </div>
 
         <!-- Theme Toggle Button -->
-        <button id="theme-toggle" aria-label="Toggle theme" type="button" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant dark:text-gray-300 hover:text-on-surface dark:hover:text-white hover:bg-surface-container-high dark:hover:bg-white/10 transition-colors">
+        <button id="theme-toggle" aria-label="Toggle theme" type="button" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant dark:text-gray-300 hover:text-on-surface dark:hover:text-white hover:bg-surface-container-high dark:hover:bg-white/10 transition-colors" title="Toggle Dark/Light Mode">
           <span class="material-symbols-outlined text-[20px]" id="theme-icon">dark_mode</span>
+        </button>
+
+        <!-- UI Audio Haptic Toggle Button -->
+        <button id="sound-toggle" aria-label="Toggle sound effects" type="button" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant dark:text-gray-300 hover:text-on-surface dark:hover:text-white hover:bg-surface-container-high dark:hover:bg-white/10 transition-colors" title="Toggle UI Sound Effects">
+          <span class="material-symbols-outlined text-[19px]" id="sound-icon">volume_up</span>
         </button>
 
         <!-- Direct Resume Download / View Button -->
@@ -391,7 +421,7 @@
       <section id="hero" class="relative w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop pt-space-xl pb-space-2xl flex flex-col justify-center min-h-[calc(88vh-4rem)] overflow-hidden">
         
         <!-- Interactive AI Neural Constellation Particle Canvas Background -->
-        <canvas id="hero-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] opacity-75 dark:opacity-85"></canvas>
+        <canvas id="hero-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] opacity-100 dark:opacity-90"></canvas>
         
         <!-- Monumental Hero Display Title with Scroll Sliding Animation -->
         <div class="relative z-10 w-full flex items-center justify-center py-space-xl overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
@@ -1433,7 +1463,7 @@
         <div id="contact-card" class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
           
           <!-- Interactive Particle Canvas in Contact Card -->
-          <canvas id="contact-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-45 dark:opacity-65"></canvas>
+          <canvas id="contact-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70 dark:opacity-65"></canvas>
 
           <div class="relative z-10 max-w-3xl flex flex-col gap-space-md overflow-hidden">
             <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
@@ -2138,9 +2168,11 @@
             if (index === 1) return `rgba(74, 225, 118, ${alpha.toFixed(3)})`;
             return `rgba(56, 189, 248, ${alpha.toFixed(3)})`;
           } else {
-            if (index === 0) return `rgba(30, 41, 59, ${alpha.toFixed(3)})`;
-            if (index === 1) return `rgba(0, 152, 68, ${alpha.toFixed(3)})`;
-            return `rgba(100, 116, 139, ${alpha.toFixed(3)})`;
+            // Enhanced high-contrast Light Mode colors: Deep obsidian ink, tech emerald, royal blue
+            const boostedAlpha = Math.min(1.0, alpha * 1.55 + 0.26);
+            if (index === 0) return `rgba(15, 23, 42, ${boostedAlpha.toFixed(3)})`;
+            if (index === 1) return `rgba(0, 145, 65, ${boostedAlpha.toFixed(3)})`;
+            return `rgba(2, 115, 235, ${boostedAlpha.toFixed(3)})`;
           }
         }
 
@@ -2177,8 +2209,8 @@
               aura.addColorStop(0.5, 'rgba(74, 225, 118, 0.03)');
               aura.addColorStop(1, 'rgba(0, 0, 0, 0)');
             } else {
-              aura.addColorStop(0, 'rgba(0, 152, 68, 0.06)');
-              aura.addColorStop(0.5, 'rgba(30, 41, 59, 0.02)');
+              aura.addColorStop(0, 'rgba(0, 145, 65, 0.12)');
+              aura.addColorStop(0.5, 'rgba(15, 23, 42, 0.05)');
               aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
             }
             this.ctx.fillStyle = aura;
@@ -2205,12 +2237,12 @@
                 p.y += normalY * force * 1.5;
 
                 // Connecting laser filament to cursor
-                const cursorAlpha = (1 - dist / cursorDist) * (this.isDark ? 0.35 : 0.22);
+                const cursorAlpha = (1 - dist / cursorDist) * (this.isDark ? 0.35 : 0.48);
                 this.ctx.beginPath();
                 this.ctx.moveTo(p.x, p.y);
                 this.ctx.lineTo(this.mouse.x, this.mouse.y);
                 this.ctx.strokeStyle = this.getColor(1, cursorAlpha);
-                this.ctx.lineWidth = 0.75;
+                this.ctx.lineWidth = this.isDark ? 0.75 : 1.1;
                 this.ctx.stroke();
               }
             }
@@ -2231,9 +2263,10 @@
             if (p.isHub) {
               currentAlpha = p.baseAlpha * (0.8 + 0.2 * Math.sin(now + p.pulseOffset));
             }
+            const nodeRadius = this.isDark ? p.radius : (p.radius * 1.25);
 
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            this.ctx.arc(p.x, p.y, nodeRadius, 0, Math.PI * 2);
             this.ctx.fillStyle = this.getColor(p.colorIndex, currentAlpha);
             this.ctx.fill();
 
@@ -2245,14 +2278,14 @@
               const dist = Math.hypot(dx, dy);
 
               if (dist < maxDist) {
-                const lineAlpha = (1 - dist / maxDist) * (this.isDark ? 0.16 : 0.08);
+                const lineAlpha = (1 - dist / maxDist) * (this.isDark ? 0.16 : 0.24);
                 this.ctx.beginPath();
                 this.ctx.moveTo(p.x, p.y);
                 this.ctx.lineTo(p2.x, p2.y);
                 this.ctx.strokeStyle = this.isDark 
                   ? `rgba(255, 255, 255, ${lineAlpha.toFixed(3)})` 
-                  : `rgba(26, 28, 28, ${lineAlpha.toFixed(3)})`;
-                this.ctx.lineWidth = 0.65;
+                  : `rgba(15, 23, 42, ${lineAlpha.toFixed(3)})`;
+                this.ctx.lineWidth = this.isDark ? 0.65 : 0.95;
                 this.ctx.stroke();
               }
             }
@@ -2297,66 +2330,106 @@
         cursorDistance: 120,
       });
 
-      // 12. Hacker / AI Text Decryption Scramble Engine
+      // 12. Hacker / AI Text Decryption Scramble Engine (Scroll-Triggered Once + Interactive Hover)
       function initScrambleEffect() {
         const glyphs = '0123456789ABCDEF!@#$%&*<>[]{}~=+_';
-        const targetElements = document.querySelectorAll('.scramble-hover, .filter-tab, [data-scramble]');
 
-        targetElements.forEach(el => {
-          if (el.dataset.scrambleReady) return;
-          el.dataset.scrambleReady = 'true';
-
-          // Store original text safely
+        function scrambleLeaf(el) {
           const originalText = el.getAttribute('data-original-text') || el.textContent.trim();
+          if (!originalText || originalText.length === 0) return;
           el.setAttribute('data-original-text', originalText);
 
+          if (el._scrambleAnimId) {
+            cancelAnimationFrame(el._scrambleAnimId);
+          }
+
           let frame = 0;
-          let animId = null;
-          let isRunning = false;
+          const totalFrames = 20; // ~320ms
 
-          const scramble = () => {
-            if (isRunning) cancelAnimationFrame(animId);
-            isRunning = true;
-            frame = 0;
-            const totalFrames = 18; // ~300ms at 60fps
+          function step() {
+            frame++;
+            const progress = frame / totalFrames;
+            const revealedCount = Math.floor(progress * originalText.length);
 
-            function step() {
-              frame++;
-              const progress = frame / totalFrames;
-              const revealedCount = Math.floor(progress * originalText.length);
-
-              let result = '';
-              for (let i = 0; i < originalText.length; i++) {
-                const ch = originalText[i];
-                if (ch === ' ' || ch === '\n' || ch === '\t') {
-                  result += ch;
-                } else if (i < revealedCount) {
-                  result += ch;
-                } else {
-                  result += glyphs[Math.floor(Math.random() * glyphs.length)];
-                }
-              }
-
-              el.textContent = result;
-
-              if (frame < totalFrames) {
-                animId = requestAnimationFrame(step);
+            let result = '';
+            for (let i = 0; i < originalText.length; i++) {
+              const ch = originalText[i];
+              if (ch === ' ' || ch === '\n' || ch === '\t') {
+                result += ch;
+              } else if (i < revealedCount) {
+                result += ch;
               } else {
-                el.textContent = originalText;
-                isRunning = false;
+                result += glyphs[Math.floor(Math.random() * glyphs.length)];
               }
             }
 
-            animId = requestAnimationFrame(step);
-          };
+            el.textContent = result;
 
-          el.addEventListener('mouseenter', scramble, { passive: true });
+            if (frame < totalFrames) {
+              el._scrambleAnimId = requestAnimationFrame(step);
+            } else {
+              el.textContent = originalText;
+              el._scrambleAnimId = null;
+            }
+          }
+
+          el._scrambleAnimId = requestAnimationFrame(step);
+        }
+
+        function scrambleTarget(el) {
+          const innerSpans = el.querySelectorAll('#hero-word-first, #hero-word-last, .scramble-target');
+          if (innerSpans.length > 0) {
+            innerSpans.forEach(span => scrambleLeaf(span));
+            return;
+          }
+          if (el.children.length === 0) {
+            scrambleLeaf(el);
+          } else {
+            Array.from(el.children).forEach(child => {
+              if (child.children.length === 0 && child.textContent.trim().length > 0 && !child.classList.contains('material-symbols-outlined')) {
+                scrambleLeaf(child);
+              }
+            });
+          }
+        }
+
+        const allHeadings = document.querySelectorAll('h1, h2, h3, h4, .scroll-slide-heading, .scramble-hover, .filter-tab, [data-scramble]');
+
+        let scrollObserver = null;
+        if ('IntersectionObserver' in window) {
+          scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                if (!el.dataset.scrambledOnScroll) {
+                  el.dataset.scrambledOnScroll = 'true';
+                  scrambleTarget(el);
+                  observer.unobserve(el); // Triggers ONCE on scroll!
+                }
+              }
+            });
+          }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -30px 0px'
+          });
+        }
+
+        allHeadings.forEach(el => {
+          const originalText = el.getAttribute('data-original-text') || el.textContent.trim();
+          if (originalText) el.setAttribute('data-original-text', originalText);
+
+          if (scrollObserver) {
+            scrollObserver.observe(el);
+          }
+
+          el.addEventListener('mouseenter', () => {
+            scrambleTarget(el);
+          }, { passive: true });
         });
       }
 
       // 13. Magnetic Custom Cursor & Dynamic Hover Lens Engine
       function initMagneticCursor() {
-        // Only run on desktop pointer devices
         if (!window.matchMedia('(pointer: fine)').matches) return;
 
         const dot = document.getElementById('cursor-dot');
@@ -2373,7 +2446,6 @@
         let isVisible = false;
         let currentTargetEl = null;
 
-        // Track mouse position
         window.addEventListener('mousemove', (e) => {
           mouseX = e.clientX;
           mouseY = e.clientY;
@@ -2385,7 +2457,6 @@
           }
         }, { passive: true });
 
-        // Fade out on window exit
         document.addEventListener('mouseleave', () => {
           isVisible = false;
           dot.style.opacity = '0';
@@ -2398,7 +2469,6 @@
           ring.style.opacity = '1';
         });
 
-        // Click compression feedback
         window.addEventListener('mousedown', () => {
           ring.style.transform = 'translate(-50%, -50%) scale(0.88)';
         });
@@ -2406,11 +2476,9 @@
           ring.style.transform = 'translate(-50%, -50%) scale(1)';
         });
 
-        // Hover target detection with event delegation
         document.addEventListener('mouseover', (e) => {
           const target = e.target;
 
-          // 1. Project Card Lens Mode
           const projectCard = target.closest('.project-item, .perspective-container');
           if (projectCard && !target.closest('a, button')) {
             currentTargetEl = null;
@@ -2421,7 +2489,6 @@
             return;
           }
 
-          // 2. Profile Photo Lens Mode
           const photoWrapper = target.closest('#about-photo-wrapper');
           if (photoWrapper) {
             currentTargetEl = null;
@@ -2432,8 +2499,7 @@
             return;
           }
 
-          // 3. Interactive Buttons, Links, Pills, Icons
-          const interactive = target.closest('a, button, input, textarea, select, .filter-tab, #theme-toggle, [role="button"], .scramble-hover');
+          const interactive = target.closest('a, button, input, textarea, select, .filter-tab, #theme-toggle, #sound-toggle, [role="button"], .scramble-hover');
           if (interactive) {
             currentTargetEl = interactive;
             ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-hover';
@@ -2443,7 +2509,6 @@
             return;
           }
 
-          // 4. Default State
           currentTargetEl = null;
           ring.className = ring.className.replace(/cursor-\w+/g, '').trim() + ' cursor-default';
           label.textContent = '';
@@ -2451,12 +2516,10 @@
           if (isVisible) dot.style.opacity = '1';
         });
 
-        // Physics animation loop
         function renderCursor() {
           let targetX = mouseX;
           let targetY = mouseY;
 
-          // Magnetic pull towards center of interactive button
           if (currentTargetEl) {
             const rect = currentTargetEl.getBoundingClientRect();
             if (rect.width < 220 && rect.height < 90) {
@@ -2467,11 +2530,9 @@
             }
           }
 
-          // Dot follows immediately
           dot.style.left = `${mouseX}px`;
           dot.style.top = `${mouseY}px`;
 
-          // Ring follows with spring lerp
           ringX += (targetX - ringX) * 0.18;
           ringY += (targetY - ringY) * 0.18;
 
@@ -2484,9 +2545,136 @@
         requestAnimationFrame(renderCursor);
       }
 
-      // Initialize Scramble & Cursor Engines
+      // 14. Subtle Haptic Web Audio Feedback Engine
+      class SoundEngine {
+        constructor() {
+          this.ctx = null;
+          this.muted = localStorage.getItem('portfolio_sound') === 'off';
+          this.soundToggle = document.getElementById('sound-toggle');
+          this.soundIcon = document.getElementById('sound-icon');
+          this.updateUI();
+          this.bindEvents();
+        }
+
+        initContext() {
+          if (!this.ctx && typeof AudioContext !== 'undefined') {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioCtx();
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+        }
+
+        updateUI() {
+          if (this.soundIcon) {
+            this.soundIcon.textContent = this.muted ? 'volume_off' : 'volume_up';
+          }
+        }
+
+        toggle() {
+          this.muted = !this.muted;
+          localStorage.setItem('portfolio_sound', this.muted ? 'off' : 'on');
+          this.updateUI();
+          if (!this.muted) {
+            this.playTone(600, 0.04, 'sine', 0.04);
+          }
+        }
+
+        bindEvents() {
+          if (this.soundToggle) {
+            this.soundToggle.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.toggle();
+            });
+          }
+
+          const unlockAudio = () => {
+            this.initContext();
+            window.removeEventListener('click', unlockAudio);
+            window.removeEventListener('keydown', unlockAudio);
+          };
+          window.addEventListener('click', unlockAudio, { passive: true });
+          window.addEventListener('keydown', unlockAudio, { passive: true });
+
+          document.addEventListener('click', (e) => {
+            if (this.muted) return;
+            const target = e.target;
+            if (target.closest('#sound-toggle')) return;
+            if (target.closest('#theme-toggle')) {
+              const isDarkNow = document.documentElement.classList.contains('dark');
+              this.playToggle(isDarkNow);
+            } else if (target.closest('.filter-tab')) {
+              this.playClick();
+            } else if (target.closest('#copy-email-btn')) {
+              this.playSuccess();
+            } else if (target.closest('a, button, .project-item')) {
+              this.playClick();
+            }
+          }, { passive: true });
+        }
+
+        playTone(freq, duration, type = 'sine', gainVal = 0.04) {
+          if (this.muted) return;
+          this.initContext();
+          if (!this.ctx) return;
+          try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+          } catch (e) {}
+        }
+
+        playClick() {
+          if (this.muted) return;
+          this.initContext();
+          if (!this.ctx) return;
+          try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(700, this.ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, this.ctx.currentTime + 0.035);
+            gain.gain.setValueAtTime(0.025, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.035);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + 0.035);
+          } catch (e) {}
+        }
+
+        playToggle(isDark) {
+          if (this.muted) return;
+          this.initContext();
+          if (!this.ctx) return;
+          const f1 = isDark ? 440 : 640;
+          const f2 = isDark ? 660 : 440;
+          this.playTone(f1, 0.05, 'sine', 0.03);
+          setTimeout(() => this.playTone(f2, 0.07, 'sine', 0.025), 45);
+        }
+
+        playSuccess() {
+          if (this.muted) return;
+          this.initContext();
+          if (!this.ctx) return;
+          this.playTone(523.25, 0.06, 'sine', 0.025);
+          setTimeout(() => this.playTone(659.25, 0.08, 'sine', 0.025), 50);
+          setTimeout(() => this.playTone(783.99, 0.12, 'sine', 0.03), 100);
+        }
+      }
+
+      // Initialize Engines
       initScrambleEffect();
       initMagneticCursor();
+      const soundEngine = new SoundEngine();
 
     })();
   </script>
