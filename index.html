@@ -271,10 +271,13 @@
     <div class="flex flex-col w-full">
 
       <!-- HERO SECTION -->
-      <section id="hero" class="relative w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop pt-space-xl pb-space-2xl flex flex-col justify-center min-h-[calc(88vh-4rem)]">
+      <section id="hero" class="relative w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop pt-space-xl pb-space-2xl flex flex-col justify-center min-h-[calc(88vh-4rem)] overflow-hidden">
+        
+        <!-- Interactive AI Neural Constellation Particle Canvas Background -->
+        <canvas id="hero-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] opacity-75 dark:opacity-85"></canvas>
         
         <!-- Monumental Hero Display Title with Scroll Sliding Animation -->
-        <div class="w-full flex items-center justify-center py-space-xl overflow-hidden select-none relative [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+        <div class="relative z-10 w-full flex items-center justify-center py-space-xl overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
           <div id="hero-title-track" class="will-change-transform flex items-center justify-center whitespace-nowrap">
             <h1 id="hero-title" class="font-display-xl text-display-xl-mobile sm:text-[76px] lg:text-display-xl text-primary dark:text-white font-extrabold uppercase tracking-tight text-center leading-none scale-y-105 cursor-default select-none transition-all duration-300">
               <span id="hero-word-first" class="inline-block will-change-transform">Hriday</span>
@@ -285,7 +288,7 @@
         </div>
 
         <!-- Triad Metadata Bar -->
-        <div class="w-full py-space-sm bg-surface-container-low/60 dark:bg-white/5 rounded-2xl px-space-md mb-space-2xl border border-outline-variant/20 dark:border-white/5">
+        <div class="relative z-10 w-full py-space-sm bg-surface-container-low/60 dark:bg-white/5 backdrop-blur-[2px] rounded-2xl px-space-md mb-space-2xl border border-outline-variant/20 dark:border-white/5">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm text-on-surface-variant dark:text-gray-300 font-label-mono text-label-mono uppercase tracking-wider">
             <div class="flex items-center gap-2 justify-start">
               <span class="w-1.5 h-1.5 rounded-full bg-primary dark:bg-white"></span>
@@ -303,7 +306,7 @@
         </div>
 
         <!-- About Section: Left Text + Right Image with Top Edge White Blend (Unboxed) -->
-        <div id="about" class="w-full max-w-[1440px] mx-auto py-space-xl scroll-mt-24">
+        <div id="about" class="relative z-10 w-full max-w-[1440px] mx-auto py-space-xl scroll-mt-24">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
             
             <!-- Left Column: About text shifted to the left -->
@@ -1310,9 +1313,12 @@
       <!-- CONTACT & INQUIRIES SECTION -->
       <section id="contact" class="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-3xl border-t border-outline-variant/30 dark:border-white/10">
         
-        <div class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
+        <div id="contact-card" class="relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
           
-          <div class="max-w-3xl flex flex-col gap-space-md overflow-hidden">
+          <!-- Interactive Particle Canvas in Contact Card -->
+          <canvas id="contact-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-45 dark:opacity-65"></canvas>
+
+          <div class="relative z-10 max-w-3xl flex flex-col gap-space-md overflow-hidden">
             <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
             <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
               Let's engineer something exceptional together.
@@ -1339,7 +1345,7 @@
             </div>
           </div>
 
-          <div class="mt-space-2xl pt-space-xl border-t border-outline-variant/30 dark:border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-space-md font-label-mono text-xs text-on-surface-variant dark:text-gray-400">
+          <div class="relative z-10 mt-space-2xl pt-space-xl border-t border-outline-variant/30 dark:border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-space-md font-label-mono text-xs text-on-surface-variant dark:text-gray-400">
             <div>
               <span class="block text-secondary dark:text-gray-500 uppercase">LOCATION</span>
               <span class="text-on-surface dark:text-white font-medium">Noida Extension, Ace City, Delhi NCR</span>
@@ -1831,6 +1837,348 @@
 
       window.addEventListener('scroll', onScrollGlobal, { passive: true });
       onScrollGlobal();
+
+      // 11. Interactive Neural Constellation Particle System Engine
+      class ParticleNetwork {
+        constructor(canvasId, containerId, options = {}) {
+          this.canvas = document.getElementById(canvasId);
+          if (!this.canvas) return;
+          this.container = document.getElementById(containerId) || this.canvas.parentElement;
+          this.ctx = this.canvas.getContext('2d');
+          if (!this.ctx) return;
+
+          this.options = Object.assign({
+            particleDensity: 0.000042,
+            maxParticles: 85,
+            minParticles: 28,
+            maxDistance: 110,
+            cursorDistance: 140,
+            repulsionStrength: 1.1,
+            baseSpeed: 0.32,
+          }, options);
+
+          this.particles = [];
+          this.burstParticles = [];
+          this.mouse = { x: -2000, y: -2000, active: false };
+          this.width = 0;
+          this.height = 0;
+          this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+          this.animationFrameId = null;
+          this.isVisible = true;
+
+          this.init();
+        }
+
+        get isDark() {
+          return document.documentElement.classList.contains('dark');
+        }
+
+        init() {
+          this.resize();
+          this.createParticles();
+          this.bindEvents();
+          this.start();
+        }
+
+        resize() {
+          if (!this.container || !this.canvas) return;
+          const rect = this.container.getBoundingClientRect();
+          this.width = Math.max(rect.width, 300);
+          this.height = Math.max(rect.height, 300);
+          this.canvas.width = Math.floor(this.width * this.dpr);
+          this.canvas.height = Math.floor(this.height * this.dpr);
+          this.canvas.style.width = this.width + 'px';
+          this.canvas.style.height = this.height + 'px';
+          this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+        }
+
+        createParticles() {
+          const area = this.width * this.height;
+          let count = Math.floor(area * this.options.particleDensity);
+          count = Math.max(this.options.minParticles, Math.min(this.options.maxParticles, count));
+
+          if (this.width < 768) {
+            count = Math.floor(count * 0.55);
+          }
+
+          this.particles = [];
+          for (let i = 0; i < count; i++) {
+            const isHub = Math.random() < 0.12;
+            const speedMultiplier = (0.5 + Math.random() * 0.8) * this.options.baseSpeed;
+            const angle = Math.random() * Math.PI * 2;
+
+            this.particles.push({
+              x: Math.random() * this.width,
+              y: Math.random() * this.height,
+              vx: Math.cos(angle) * speedMultiplier,
+              vy: Math.sin(angle) * speedMultiplier,
+              radius: isHub ? (2.4 + Math.random() * 0.8) : (1.2 + Math.random() * 0.9),
+              isHub: isHub,
+              baseAlpha: isHub ? 0.75 : (0.25 + Math.random() * 0.45),
+              pulseOffset: Math.random() * Math.PI * 2,
+              colorIndex: Math.floor(Math.random() * 3) // 0: primary, 1: secondary/emerald, 2: accent/cyan
+            });
+          }
+        }
+
+        bindEvents() {
+          let resizeTimer;
+          window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              this.resize();
+              this.createParticles();
+            }, 150);
+          }, { passive: true });
+
+          // Mouse tracking
+          this.container.addEventListener('mousemove', (e) => {
+            const rect = this.canvas.getBoundingClientRect();
+            this.mouse.x = e.clientX - rect.left;
+            this.mouse.y = e.clientY - rect.top;
+            this.mouse.active = true;
+          }, { passive: true });
+
+          this.container.addEventListener('mouseleave', () => {
+            this.mouse.active = false;
+            this.mouse.x = -2000;
+            this.mouse.y = -2000;
+          }, { passive: true });
+
+          // Touch tracking
+          this.container.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+              const rect = this.canvas.getBoundingClientRect();
+              this.mouse.x = e.touches[0].clientX - rect.left;
+              this.mouse.y = e.touches[0].clientY - rect.top;
+              this.mouse.active = true;
+            }
+          }, { passive: true });
+
+          this.container.addEventListener('touchend', () => {
+            this.mouse.active = false;
+            this.mouse.x = -2000;
+            this.mouse.y = -2000;
+          }, { passive: true });
+
+          // Click / Tap Spark Burst
+          this.container.addEventListener('click', (e) => {
+            if (e.target.closest('a, button, input, textarea, select')) return;
+            const rect = this.canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            this.spawnBurst(clickX, clickY);
+          }, { passive: true });
+
+          // IntersectionObserver to suspend animation when off-screen
+          if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  this.isVisible = true;
+                  this.start();
+                } else {
+                  this.isVisible = false;
+                  this.stop();
+                }
+              });
+            }, { threshold: 0.05 });
+            io.observe(this.container);
+          }
+
+          // Document visibility to suspend animation when tab is inactive
+          document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+              this.stop();
+            } else if (this.isVisible) {
+              this.start();
+            }
+          });
+        }
+
+        spawnBurst(x, y) {
+          const burstCount = 10;
+          for (let i = 0; i < burstCount; i++) {
+            const angle = (Math.PI * 2 * i) / burstCount + (Math.random() * 0.4 - 0.2);
+            const speed = 1.0 + Math.random() * 2.2;
+            this.burstParticles.push({
+              x: x,
+              y: y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              radius: 1.5 + Math.random() * 1.5,
+              life: 1.0,
+              decay: 0.02 + Math.random() * 0.02,
+              colorIndex: Math.floor(Math.random() * 3)
+            });
+          }
+          if (!this.animationFrameId) this.start();
+        }
+
+        getColor(index, alpha) {
+          if (this.isDark) {
+            if (index === 0) return `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+            if (index === 1) return `rgba(74, 225, 118, ${alpha.toFixed(3)})`;
+            return `rgba(56, 189, 248, ${alpha.toFixed(3)})`;
+          } else {
+            if (index === 0) return `rgba(30, 41, 59, ${alpha.toFixed(3)})`;
+            if (index === 1) return `rgba(0, 152, 68, ${alpha.toFixed(3)})`;
+            return `rgba(100, 116, 139, ${alpha.toFixed(3)})`;
+          }
+        }
+
+        start() {
+          if (!this.animationFrameId) {
+            this.render();
+          }
+        }
+
+        stop() {
+          if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+          }
+        }
+
+        render() {
+          this.animationFrameId = requestAnimationFrame(() => this.render());
+
+          this.ctx.clearRect(0, 0, this.width, this.height);
+
+          const now = performance.now() * 0.002;
+          const maxDist = this.width < 768 ? (this.options.maxDistance * 0.8) : this.options.maxDistance;
+          const cursorDist = this.options.cursorDistance;
+
+          // 1. Soft Mouse Aura Spotlight
+          if (this.mouse.active) {
+            const aura = this.ctx.createRadialGradient(
+              this.mouse.x, this.mouse.y, 0,
+              this.mouse.x, this.mouse.y, cursorDist
+            );
+            if (this.isDark) {
+              aura.addColorStop(0, 'rgba(56, 189, 248, 0.08)');
+              aura.addColorStop(0.5, 'rgba(74, 225, 118, 0.03)');
+              aura.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            } else {
+              aura.addColorStop(0, 'rgba(0, 152, 68, 0.06)');
+              aura.addColorStop(0.5, 'rgba(30, 41, 59, 0.02)');
+              aura.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            }
+            this.ctx.fillStyle = aura;
+            this.ctx.beginPath();
+            this.ctx.arc(this.mouse.x, this.mouse.y, cursorDist, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+
+          // 2. Main Particle Constellation
+          for (let i = 0; i < this.particles.length; i++) {
+            const p = this.particles[i];
+
+            // Cursor interaction physics
+            if (this.mouse.active) {
+              const dx = p.x - this.mouse.x;
+              const dy = p.y - this.mouse.y;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < cursorDist && dist > 0) {
+                const force = (1 - dist / cursorDist) * this.options.repulsionStrength;
+                const normalX = dx / dist;
+                const normalY = dy / dist;
+                p.x += normalX * force * 1.5;
+                p.y += normalY * force * 1.5;
+
+                // Connecting laser filament to cursor
+                const cursorAlpha = (1 - dist / cursorDist) * (this.isDark ? 0.35 : 0.22);
+                this.ctx.beginPath();
+                this.ctx.moveTo(p.x, p.y);
+                this.ctx.lineTo(this.mouse.x, this.mouse.y);
+                this.ctx.strokeStyle = this.getColor(1, cursorAlpha);
+                this.ctx.lineWidth = 0.75;
+                this.ctx.stroke();
+              }
+            }
+
+            // Move
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Soft Wrap
+            const margin = 12;
+            if (p.x < -margin) p.x = this.width + margin;
+            if (p.x > this.width + margin) p.x = -margin;
+            if (p.y < -margin) p.y = this.height + margin;
+            if (p.y > this.height + margin) p.y = -margin;
+
+            // Draw Node
+            let currentAlpha = p.baseAlpha;
+            if (p.isHub) {
+              currentAlpha = p.baseAlpha * (0.8 + 0.2 * Math.sin(now + p.pulseOffset));
+            }
+
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            this.ctx.fillStyle = this.getColor(p.colorIndex, currentAlpha);
+            this.ctx.fill();
+
+            // Connections between neighbors
+            for (let j = i + 1; j < this.particles.length; j++) {
+              const p2 = this.particles[j];
+              const dx = p.x - p2.x;
+              const dy = p.y - p2.y;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < maxDist) {
+                const lineAlpha = (1 - dist / maxDist) * (this.isDark ? 0.16 : 0.08);
+                this.ctx.beginPath();
+                this.ctx.moveTo(p.x, p.y);
+                this.ctx.lineTo(p2.x, p2.y);
+                this.ctx.strokeStyle = this.isDark 
+                  ? `rgba(255, 255, 255, ${lineAlpha.toFixed(3)})` 
+                  : `rgba(26, 28, 28, ${lineAlpha.toFixed(3)})`;
+                this.ctx.lineWidth = 0.65;
+                this.ctx.stroke();
+              }
+            }
+          }
+
+          // 3. Render Click Burst Sparks
+          for (let i = this.burstParticles.length - 1; i >= 0; i--) {
+            const bp = this.burstParticles[i];
+            bp.x += bp.vx;
+            bp.y += bp.vy;
+            bp.vx *= 0.95;
+            bp.vy *= 0.95;
+            bp.life -= bp.decay;
+
+            if (bp.life <= 0) {
+              this.burstParticles.splice(i, 1);
+              continue;
+            }
+
+            this.ctx.beginPath();
+            this.ctx.arc(bp.x, bp.y, Math.max(0.5, bp.radius * bp.life), 0, Math.PI * 2);
+            this.ctx.fillStyle = this.getColor(bp.colorIndex, bp.life * 0.85);
+            this.ctx.fill();
+          }
+        }
+      }
+
+      // Initialize Particle Networks
+      const heroParticles = new ParticleNetwork('hero-particle-canvas', 'hero', {
+        particleDensity: 0.000045,
+        maxParticles: 85,
+        minParticles: 30,
+        maxDistance: 115,
+        cursorDistance: 150,
+      });
+
+      const contactParticles = new ParticleNetwork('contact-particle-canvas', 'contact-card', {
+        particleDensity: 0.000035,
+        maxParticles: 45,
+        minParticles: 18,
+        maxDistance: 95,
+        cursorDistance: 120,
+      });
 
     })();
   </script>
