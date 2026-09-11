@@ -1620,33 +1620,34 @@
           </p>
         </div>
 
-        <!-- Interactive 3D Skill Cube Sphere Showcase -->
-        <div class="relative w-full rounded-[2.5rem] bg-surface-container-high dark:bg-[#161717] p-space-lg sm:p-space-xl mb-space-2xl border border-outline-variant/20 dark:border-white/5 overflow-hidden">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md relative z-10">
+        <!-- Interactive 3D Skill Cube Sphere Showcase (Suspended / Unboxed) -->
+        <div class="relative w-full my-space-lg overflow-visible">
+          <!-- Top Floating Telemetry Status Row -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-xs relative z-10 px-1">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h3 class="font-nav-link text-nav-link font-bold uppercase tracking-wider text-on-surface dark:text-white">
-                Interactive 3D Skill Cube Sphere // Aesthetic Matrix
+                Suspended 3D Skill Cube Sphere // Aesthetic Matrix
               </h3>
             </div>
             <div class="flex items-center gap-2">
-              <span id="orbit-filter-status" class="px-3.5 py-1 rounded-full bg-surface-container dark:bg-white/10 font-label-mono text-[11px] text-secondary dark:text-gray-300 uppercase tracking-wider border border-outline-variant/20 dark:border-white/10">
+              <span id="orbit-filter-status" class="px-3.5 py-1 rounded-full bg-surface-container/80 dark:bg-white/10 backdrop-blur-md font-label-mono text-[11px] text-secondary dark:text-gray-300 uppercase tracking-wider border border-outline-variant/20 dark:border-white/10 shadow-sm">
                 Click 3D Cube to Filter Projects
               </span>
             </div>
           </div>
 
-          <!-- Canvas Container for 3D Tech Orbit -->
-          <div class="relative w-full h-[340px] sm:h-[440px] rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container-lowest/60 dark:bg-black/40">
+          <!-- Suspended Canvas Viewport (Zero Background / Borderless) -->
+          <div class="relative w-full h-[400px] sm:h-[480px] lg:h-[520px] overflow-hidden flex items-center justify-center bg-transparent">
             <canvas id="skills-tech-orbit-canvas" class="w-full h-full cursor-grab active:cursor-grabbing outline-none select-none"></canvas>
 
             <!-- Interaction Hints & Hover Pill -->
-            <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
-              <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/80 dark:bg-black/60 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-wider">
+            <div class="absolute bottom-2 inset-x-2 sm:inset-x-6 flex items-center justify-between pointer-events-none z-10">
+              <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container/70 dark:bg-black/50 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-wider">
                 <span class="material-symbols-outlined text-[14px]">view_in_ar</span>
                 <span>Drag to Orbit Sphere • Click Cube to Filter</span>
               </div>
-              <div id="hovered-tag-pill" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold tracking-wider shadow-sm transition-all">
+              <div id="hovered-tag-pill" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold tracking-wider shadow-md transition-all">
                 <span>CUBE READY</span>
               </div>
             </div>
