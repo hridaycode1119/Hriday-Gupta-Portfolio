@@ -1620,34 +1620,34 @@
           </p>
         </div>
 
-        <!-- Interactive 3D Tech Orbit Sphere Showcase -->
+        <!-- Interactive 3D Skill Cube Sphere Showcase -->
         <div class="relative w-full rounded-[2.5rem] bg-surface-container-high dark:bg-[#161717] p-space-lg sm:p-space-xl mb-space-2xl border border-outline-variant/20 dark:border-white/5 overflow-hidden">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md relative z-10">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h3 class="font-nav-link text-nav-link font-bold uppercase tracking-wider text-on-surface dark:text-white">
-                Interactive 3D Tech Orbit // Planetary Core
+                Interactive 3D Skill Cube Sphere // Aesthetic Matrix
               </h3>
             </div>
             <div class="flex items-center gap-2">
               <span id="orbit-filter-status" class="px-3.5 py-1 rounded-full bg-surface-container dark:bg-white/10 font-label-mono text-[11px] text-secondary dark:text-gray-300 uppercase tracking-wider border border-outline-variant/20 dark:border-white/10">
-                Click Tag to Filter Projects
+                Click 3D Cube to Filter Projects
               </span>
             </div>
           </div>
 
           <!-- Canvas Container for 3D Tech Orbit -->
-          <div class="relative w-full h-[320px] sm:h-[420px] rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container-lowest/60 dark:bg-black/40">
+          <div class="relative w-full h-[340px] sm:h-[440px] rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container-lowest/60 dark:bg-black/40">
             <canvas id="skills-tech-orbit-canvas" class="w-full h-full cursor-grab active:cursor-grabbing outline-none select-none"></canvas>
 
             <!-- Interaction Hints & Hover Pill -->
             <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
               <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/80 dark:bg-black/60 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-wider">
-                <span class="material-symbols-outlined text-[14px]">touch_app</span>
-                <span>Drag to Rotate Sphere • Click Tag to Filter</span>
+                <span class="material-symbols-outlined text-[14px]">view_in_ar</span>
+                <span>Drag to Orbit Sphere • Click Cube to Filter</span>
               </div>
-              <div id="hovered-tag-pill" class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold tracking-wider shadow-sm transition-all">
-                <span>ORBIT READY</span>
+              <div id="hovered-tag-pill" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold tracking-wider shadow-sm transition-all">
+                <span>CUBE READY</span>
               </div>
             </div>
           </div>
@@ -3779,7 +3779,7 @@
         }
       }
 
-      // 16. Interactive 3D Tech Orbit / Physics Tag Sphere (Three.js WebGL)
+      // 16. Interactive 3D Skill Cube Sphere / Aesthetic Matrix (Three.js WebGL)
       class SkillsTechOrbit3D {
         constructor() {
           this.canvas = document.getElementById('skills-tech-orbit-canvas');
@@ -3788,11 +3788,11 @@
           this.container = this.canvas.parentElement;
           this.scene = new THREE.Scene();
 
-          this.width = this.container.clientWidth || 500;
-          this.height = this.container.clientHeight || 380;
+          this.width = this.container.clientWidth || 600;
+          this.height = this.container.clientHeight || 440;
 
           this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 100);
-          this.camera.position.z = 6.2;
+          this.camera.position.z = 6.4;
 
           this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
@@ -3803,44 +3803,47 @@
           this.renderer.setSize(this.width, this.height);
           this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-          this.orbitRadius = 2.35;
+          this.orbitRadius = 2.45;
           this.rootGroup = new THREE.Group();
           this.scene.add(this.rootGroup);
 
           this.techNodes = [
-            { name: 'Python 3.11', cat: 'ai' },
-            { name: 'Gemini 1.5', cat: 'ai' },
-            { name: 'Next.js 14', cat: 'fullstack' },
-            { name: 'Three.js', cat: 'web' },
-            { name: 'FastAPI', cat: 'fullstack' },
-            { name: 'PyTorch', cat: 'ai' },
-            { name: 'Docker', cat: 'fullstack' },
-            { name: 'PostgreSQL', cat: 'data' },
-            { name: 'Qdrant Vector', cat: 'ai' },
-            { name: 'Tailwind CSS', cat: 'web' },
-            { name: 'XGBoost', cat: 'ai' },
-            { name: 'SHAP (XAI)', cat: 'ai' },
-            { name: 'React.js', cat: 'web' },
-            { name: 'Node.js', cat: 'fullstack' },
-            { name: 'Express.js', cat: 'fullstack' },
-            { name: 'C Language', cat: 'fullstack' },
-            { name: 'Java Core', cat: 'fullstack' },
-            { name: 'Streamlit', cat: 'ai' }
+            { name: 'Python 3.11', cat: 'ai', pill: 'AI/ML' },
+            { name: 'Gemini 1.5', cat: 'ai', pill: 'LLM' },
+            { name: 'Next.js 14', cat: 'fullstack', pill: 'REACT' },
+            { name: 'Three.js', cat: 'web', pill: 'WEBGL' },
+            { name: 'FastAPI', cat: 'fullstack', pill: 'REST' },
+            { name: 'PyTorch', cat: 'ai', pill: 'TENSOR' },
+            { name: 'Docker', cat: 'fullstack', pill: 'DEVOPS' },
+            { name: 'PostgreSQL', cat: 'data', pill: 'SQL' },
+            { name: 'Qdrant Vector', cat: 'ai', pill: 'VEC-DB' },
+            { name: 'Tailwind CSS', cat: 'web', pill: 'STYLING' },
+            { name: 'XGBoost', cat: 'ai', pill: 'ML-TREE' },
+            { name: 'SHAP (XAI)', cat: 'ai', pill: 'XAI' },
+            { name: 'React.js', cat: 'web', pill: 'FRONTEND' },
+            { name: 'Node.js', cat: 'fullstack', pill: 'BACKEND' },
+            { name: 'Express.js', cat: 'fullstack', pill: 'API' },
+            { name: 'C Language', cat: 'fullstack', pill: 'SYSTEMS' },
+            { name: 'Java Core', cat: 'fullstack', pill: 'OOP' },
+            { name: 'Streamlit', cat: 'ai', pill: 'DATA-APP' },
+            { name: 'TypeScript', cat: 'web', pill: 'TYPED-JS' },
+            { name: 'LangChain', cat: 'ai', pill: 'RAG' }
           ];
 
-          this.sprites = [];
+          this.cubeMeshes = [];
           this.isDragging = false;
           this.prevMousePos = { x: 0, y: 0 };
-          this.angularVelocity = { x: 0.0012, y: 0.003 };
+          this.angularVelocity = { x: 0.001, y: 0.003 };
           this.raycaster = new THREE.Raycaster();
           this.mouse = new THREE.Vector2(-100, -100);
-          this.hoveredSprite = null;
+          this.hoveredCube = null;
           this.isVisible = true;
           this.animFrameId = null;
 
           this.initLighting();
-          this.buildCore();
-          this.buildTechNodes();
+          this.buildCelestialSphere();
+          this.buildSkillCubes();
+          this.buildConstellationWeb();
           this.bindEvents();
           this.start();
         }
@@ -3850,88 +3853,165 @@
         }
 
         initLighting() {
-          const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
-          this.scene.add(ambientLight);
+          const isD = this.isDark;
+          this.ambientLight = new THREE.AmbientLight(0xffffff, isD ? 0.9 : 1.2);
+          this.scene.add(this.ambientLight);
 
-          this.coreLight = new THREE.PointLight(0x00e575, 2.5, 8);
-          this.rootGroup.add(this.coreLight);
+          this.keyLight = new THREE.DirectionalLight(0xffffff, isD ? 1.5 : 1.8);
+          this.keyLight.position.set(4, 5, 5);
+          this.scene.add(this.keyLight);
+
+          this.fillLight = new THREE.DirectionalLight(0x38bdf8, isD ? 0.8 : 0.4);
+          this.fillLight.position.set(-4, -2, -3);
+          this.scene.add(this.fillLight);
+
+          this.centerLight = new THREE.PointLight(0x00e575, isD ? 2.5 : 1.8, 6);
+          this.rootGroup.add(this.centerLight);
         }
 
-        buildCore() {
-          const coreGeo = new THREE.IcosahedronGeometry(0.7, 1);
-          this.coreMat = new THREE.MeshStandardMaterial({
-            color: this.isDark ? 0x0f172a : 0x1e293b,
+        buildCelestialSphere() {
+          const isD = this.isDark;
+
+          // 1. Crystalline Geodesic Core
+          const geoLattice = new THREE.IcosahedronGeometry(0.95, 2);
+          this.coreLatticeMat = new THREE.MeshBasicMaterial({
+            color: isD ? 0x00e575 : 0x009144,
             wireframe: true,
             transparent: true,
-            opacity: 0.65
+            opacity: isD ? 0.35 : 0.25
           });
-          this.coreMesh = new THREE.Mesh(coreGeo, this.coreMat);
-          this.rootGroup.add(this.coreMesh);
+          this.coreLatticeMesh = new THREE.Mesh(geoLattice, this.coreLatticeMat);
+          this.rootGroup.add(this.coreLatticeMesh);
 
-          const ringGeo1 = new THREE.RingGeometry(1.05, 1.08, 48);
+          // 2. Inner Glossy Obsidian Nucleus
+          const nucleusGeo = new THREE.SphereGeometry(0.68, 32, 32);
+          this.nucleusMat = new THREE.MeshStandardMaterial({
+            color: isD ? 0x0a1017 : 0x1e293b,
+            roughness: 0.15,
+            metalness: 0.9,
+            emissive: isD ? 0x051d14 : 0x0a1f18,
+            emissiveIntensity: 0.5
+          });
+          this.nucleusMesh = new THREE.Mesh(nucleusGeo, this.nucleusMat);
+          this.rootGroup.add(this.nucleusMesh);
+
+          // 3. Dual Latitude Holographic Rings
+          const ringGeo1 = new THREE.RingGeometry(1.22, 1.25, 64);
           this.ringMat1 = new THREE.MeshBasicMaterial({
-            color: this.isDark ? 0x00e575 : 0x009144,
+            color: isD ? 0x00e575 : 0x009144,
             side: THREE.DoubleSide,
             transparent: true,
-            opacity: 0.6
+            opacity: 0.45
           });
           this.ring1 = new THREE.Mesh(ringGeo1, this.ringMat1);
           this.ring1.rotation.x = Math.PI / 3;
           this.rootGroup.add(this.ring1);
 
-          const ringGeo2 = new THREE.RingGeometry(1.22, 1.25, 48);
+          const ringGeo2 = new THREE.RingGeometry(1.38, 1.41, 64);
           this.ringMat2 = new THREE.MeshBasicMaterial({
-            color: this.isDark ? 0x38bdf8 : 0x0284c7,
+            color: isD ? 0x38bdf8 : 0x0284c7,
             side: THREE.DoubleSide,
             transparent: true,
-            opacity: 0.45
+            opacity: 0.35
           });
           this.ring2 = new THREE.Mesh(ringGeo2, this.ringMat2);
           this.ring2.rotation.y = Math.PI / 4;
           this.rootGroup.add(this.ring2);
+
+          // 4. Ambient Orbiting Star Dust Particles
+          const dustCount = 70;
+          const dustGeo = new THREE.BufferGeometry();
+          const dustPositions = new Float32Array(dustCount * 3);
+          for (let i = 0; i < dustCount; i++) {
+            const rad = 1.4 + Math.random() * 0.9;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            dustPositions[i * 3] = rad * Math.sin(phi) * Math.cos(theta);
+            dustPositions[i * 3 + 1] = rad * Math.sin(phi) * Math.sin(theta);
+            dustPositions[i * 3 + 2] = rad * Math.cos(phi);
+          }
+          dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+          this.dustMat = new THREE.PointsMaterial({
+            color: isD ? 0x4ae176 : 0x0284c7,
+            size: 0.045,
+            transparent: true,
+            opacity: 0.65
+          });
+          this.dustPoints = new THREE.Points(dustGeo, this.dustMat);
+          this.rootGroup.add(this.dustPoints);
         }
 
-        createTagTexture(name) {
+        createCubeFrontTexture(name, cat, pill) {
           const canvas = document.createElement('canvas');
-          canvas.width = 340;
-          canvas.height = 100;
+          canvas.width = 512;
+          canvas.height = 256;
           const ctx = canvas.getContext('2d');
           const isD = this.isDark;
 
-          ctx.beginPath();
-          const r = 45;
-          const x = 10, y = 10, w = canvas.width - 20, h = canvas.height - 20;
-          ctx.moveTo(x + r, y);
-          ctx.arcTo(x + w, y, x + w, y + h, r);
-          ctx.arcTo(x + w, y + h, x, y + h, r);
-          ctx.arcTo(x, y + h, x, y, r);
-          ctx.arcTo(x, y, x + w, y, r);
-          ctx.closePath();
+          // Dark Chamfered Glass Background
+          const grad = ctx.createLinearGradient(0, 0, 512, 256);
+          if (isD) {
+            grad.addColorStop(0, '#0c121e');
+            grad.addColorStop(0.5, '#111a28');
+            grad.addColorStop(1, '#080d14');
+          } else {
+            grad.addColorStop(0, '#ffffff');
+            grad.addColorStop(0.5, '#f1f5f9');
+            grad.addColorStop(1, '#e2e8f0');
+          }
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 512, 256);
 
-          ctx.fillStyle = isD ? 'rgba(15, 23, 42, 0.88)' : 'rgba(241, 245, 249, 0.92)';
+          // Outer Glow Border
+          const accentColor = cat === 'ai' ? (isD ? '#00e575' : '#007336') :
+                             cat === 'fullstack' ? (isD ? '#38bdf8' : '#0284c7') :
+                             cat === 'data' ? (isD ? '#a855f7' : '#7e22ce') :
+                             (isD ? '#eab308' : '#ca8a04');
+
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 8;
+          ctx.strokeRect(6, 6, 500, 244);
+
+          // Top Header Pill Badge
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.arc(36, 46, 10, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.strokeStyle = isD ? 'rgba(0, 229, 117, 0.65)' : 'rgba(0, 115, 54, 0.55)';
-          ctx.lineWidth = 4;
-          ctx.stroke();
+          ctx.font = 'bold 22px "Space Grotesk", sans-serif';
+          ctx.fillStyle = accentColor;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`// ${pill}`, 56, 46);
 
-          ctx.fillStyle = isD ? '#00e575' : '#007336';
-          ctx.beginPath();
-          ctx.arc(45, canvas.height / 2, 8, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.font = 'bold 30px "Space Grotesk", sans-serif';
+          // Tech Name Headline
+          ctx.font = 'bold 44px "Space Grotesk", sans-serif';
           ctx.fillStyle = isD ? '#ffffff' : '#0f172a';
           ctx.textAlign = 'left';
           ctx.textBaseline = 'middle';
-          ctx.fillText(name, 68, canvas.height / 2);
+          ctx.fillText(name, 32, 130);
+
+          // Bottom Telemetry Bar
+          ctx.fillStyle = isD ? 'rgba(255,255,255,0.45)' : 'rgba(15,23,42,0.6)';
+          ctx.font = '500 20px monospace';
+          ctx.fillText(`TAG // 3D CUBE ACTIVE`, 32, 205);
 
           return new THREE.CanvasTexture(canvas);
         }
 
-        buildTechNodes() {
+        buildSkillCubes() {
+          const isD = this.isDark;
           const count = this.techNodes.length;
           const phi = Math.PI * (3 - Math.sqrt(5));
+
+          // Body Material for sides and back of cubes
+          this.cubeSideMat = new THREE.MeshStandardMaterial({
+            color: isD ? 0x0e1520 : 0x334155,
+            roughness: 0.25,
+            metalness: 0.85
+          });
+
+          this.cubePositions = [];
 
           for (let i = 0; i < count; i++) {
             const y = 1 - (i / (count - 1)) * 2;
@@ -3940,46 +4020,117 @@
             const x = Math.cos(theta) * radiusAtY;
             const z = Math.sin(theta) * radiusAtY;
 
-            const pos = new THREE.Vector3(x, y, z).multiplyScalar(this.orbitRadius);
+            const normal = new THREE.Vector3(x, y, z).normalize();
+            const pos = normal.clone().multiplyScalar(this.orbitRadius);
+            this.cubePositions.push(pos.clone());
 
             const tech = this.techNodes[i];
-            const texture = this.createTagTexture(tech.name);
-            const material = new THREE.SpriteMaterial({
-              map: texture,
-              transparent: true,
-              opacity: 0.95
-            });
-            const sprite = new THREE.Sprite(material);
-            sprite.position.copy(pos);
-            sprite.scale.set(1.4, 0.42, 1);
-            sprite.userData = { tech: tech, originalScale: new THREE.Vector3(1.4, 0.42, 1) };
+            const frontTex = this.createCubeFrontTexture(tech.name, tech.cat, tech.pill);
 
-            this.rootGroup.add(sprite);
-            this.sprites.push(sprite);
+            const frontMat = new THREE.MeshStandardMaterial({
+              map: frontTex,
+              roughness: 0.2,
+              metalness: 0.4,
+              emissive: isD ? 0x00e575 : 0x007336,
+              emissiveMap: frontTex,
+              emissiveIntensity: isD ? 0.35 : 0.15
+            });
+
+            // 6 materials for BoxGeometry (right, left, top, bottom, front, back)
+            const materials = [
+              this.cubeSideMat, this.cubeSideMat,
+              this.cubeSideMat, this.cubeSideMat,
+              frontMat,
+              this.cubeSideMat
+            ];
+
+            // 3D Cuboid Block
+            const cubeGeo = new THREE.BoxGeometry(0.86, 0.46, 0.22);
+            const cube = new THREE.Mesh(cubeGeo, materials);
+            cube.position.copy(pos);
+
+            // Orient cube radially outward from sphere center
+            cube.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+
+            cube.userData = {
+              tech: tech,
+              basePos: pos.clone(),
+              normal: normal.clone(),
+              baseScale: new THREE.Vector3(1, 1, 1),
+              currentScale: 1,
+              targetScale: 1,
+              currentPush: 0,
+              targetPush: 0,
+              frontMat: frontMat
+            };
+
+            this.rootGroup.add(cube);
+            this.cubeMeshes.push(cube);
           }
+        }
+
+        buildConstellationWeb() {
+          const isD = this.isDark;
+          const linePoints = [];
+          const count = this.cubePositions.length;
+
+          // Connect each cube to 2 closest neighbor cubes
+          for (let i = 0; i < count; i++) {
+            const p1 = this.cubePositions[i];
+            const dists = [];
+            for (let j = 0; j < count; j++) {
+              if (i === j) continue;
+              const p2 = this.cubePositions[j];
+              dists.push({ j: j, dist: p1.distanceTo(p2) });
+            }
+            dists.sort((a, b) => a.dist - b.dist);
+
+            for (let k = 0; k < 2 && k < dists.length; k++) {
+              const p2 = this.cubePositions[dists[k].j];
+              linePoints.push(p1.x, p1.y, p1.z);
+              linePoints.push(p2.x, p2.y, p2.z);
+            }
+          }
+
+          const lineGeo = new THREE.BufferGeometry();
+          lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePoints, 3));
+          this.webMat = new THREE.LineBasicMaterial({
+            color: isD ? 0x00e575 : 0x0284c7,
+            transparent: true,
+            opacity: isD ? 0.22 : 0.15
+          });
+          this.webLines = new THREE.LineSegments(lineGeo, this.webMat);
+          this.rootGroup.add(this.webLines);
         }
 
         updateColors() {
           const isD = this.isDark;
-          if (this.coreMat) {
-            this.coreMat.color.setHex(isD ? 0x0f172a : 0x1e293b);
+          if (this.coreLatticeMat) this.coreLatticeMat.color.setHex(isD ? 0x00e575 : 0x009144);
+          if (this.nucleusMat) {
+            this.nucleusMat.color.setHex(isD ? 0x0a1017 : 0x1e293b);
+            this.nucleusMat.emissive.setHex(isD ? 0x051d14 : 0x0a1f18);
           }
-          if (this.ringMat1) {
-            this.ringMat1.color.setHex(isD ? 0x00e575 : 0x009144);
-          }
-          if (this.ringMat2) {
-            this.ringMat2.color.setHex(isD ? 0x38bdf8 : 0x0284c7);
-          }
-          this.sprites.forEach(sprite => {
-            sprite.material.map = this.createTagTexture(sprite.userData.tech.name);
-            sprite.material.needsUpdate = true;
+          if (this.ringMat1) this.ringMat1.color.setHex(isD ? 0x00e575 : 0x009144);
+          if (this.ringMat2) this.ringMat2.color.setHex(isD ? 0x38bdf8 : 0x0284c7);
+          if (this.webMat) this.webMat.color.setHex(isD ? 0x00e575 : 0x0284c7);
+          if (this.dustMat) this.dustMat.color.setHex(isD ? 0x4ae176 : 0x0284c7);
+          if (this.cubeSideMat) this.cubeSideMat.color.setHex(isD ? 0x0e1520 : 0x334155);
+
+          this.cubeMeshes.forEach(cube => {
+            const tech = cube.userData.tech;
+            const newTex = this.createCubeFrontTexture(tech.name, tech.cat, tech.pill);
+            cube.userData.frontMat.map = newTex;
+            cube.userData.frontMat.emissiveMap = newTex;
+            cube.userData.frontMat.emissive.setHex(isD ? 0x00e575 : 0x007336);
+            cube.userData.frontMat.emissiveIntensity = isD ? 0.35 : 0.15;
+            cube.userData.frontMat.needsUpdate = true;
           });
         }
 
         filterProjects(techName) {
           const statusEl = document.getElementById('orbit-filter-status');
           if (statusEl) {
-            statusEl.textContent = `FILTER: ${techName.toUpperCase()}`;
+            statusEl.textContent = `FILTER: ${techName.toUpperCase()} [3D CUBE]`;
             statusEl.className = 'px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold uppercase tracking-wider shadow-sm transition-all';
           }
 
@@ -4017,7 +4168,7 @@
 
           try {
             if (window.soundEngine && typeof window.soundEngine.playTone === 'function') {
-              window.soundEngine.playTone(720, 0.1, 'triangle', 0.05);
+              window.soundEngine.playTone(720, 0.12, 'triangle', 0.05);
             }
           } catch(e) {}
         }
@@ -4058,8 +4209,8 @@
           });
 
           this.canvas.addEventListener('click', () => {
-            if (this.hoveredSprite) {
-              this.filterProjects(this.hoveredSprite.userData.tech.name);
+            if (this.hoveredCube) {
+              this.filterProjects(this.hoveredCube.userData.tech.name);
             }
           });
 
@@ -4101,44 +4252,65 @@
         render() {
           this.animFrameId = requestAnimationFrame(() => this.render());
 
+          // Inertia & Natural Drift
           if (!this.isDragging) {
             this.angularVelocity.x *= 0.94;
             this.angularVelocity.y *= 0.94;
-            this.rootGroup.rotation.y += (0.0035 + this.angularVelocity.y);
-            this.rootGroup.rotation.x += (0.0015 + this.angularVelocity.x);
+            this.rootGroup.rotation.y += (0.003 + this.angularVelocity.y);
+            this.rootGroup.rotation.x += (0.001 + this.angularVelocity.x);
           }
 
-          if (this.ring1) this.ring1.rotation.z += 0.012;
-          if (this.ring2) this.ring2.rotation.z -= 0.009;
-          if (this.coreMesh) {
-            this.coreMesh.rotation.y += 0.006;
-            this.coreMesh.rotation.x -= 0.004;
+          // Celestial Centerpiece Dynamics
+          if (this.ring1) this.ring1.rotation.z += 0.01;
+          if (this.ring2) this.ring2.rotation.z -= 0.008;
+          if (this.coreLatticeMesh) {
+            this.coreLatticeMesh.rotation.y += 0.005;
+            this.coreLatticeMesh.rotation.x -= 0.003;
+          }
+          if (this.dustPoints) {
+            this.dustPoints.rotation.y -= 0.0018;
           }
 
+          // Smooth Cube Hover Transitions (Push outward & Scale)
+          this.cubeMeshes.forEach(cube => {
+            const ud = cube.userData;
+            ud.currentScale += (ud.targetScale - ud.currentScale) * 0.12;
+            ud.currentPush += (ud.targetPush - ud.currentPush) * 0.12;
+
+            cube.scale.setScalar(ud.currentScale);
+            cube.position.copy(ud.basePos).addScaledVector(ud.normal, ud.currentPush);
+          });
+
+          // Raycasting Detection
           this.raycaster.setFromCamera(this.mouse, this.camera);
-          const intersects = this.raycaster.intersectObjects(this.sprites);
-
+          const intersects = this.raycaster.intersectObjects(this.cubeMeshes);
           const hoverPill = document.getElementById('hovered-tag-pill');
 
           if (intersects.length > 0) {
-            const hitSprite = intersects[0].object;
-            if (this.hoveredSprite !== hitSprite) {
-              if (this.hoveredSprite) {
-                this.hoveredSprite.scale.copy(this.hoveredSprite.userData.originalScale);
+            const hitCube = intersects[0].object;
+            if (this.hoveredCube !== hitCube) {
+              if (this.hoveredCube) {
+                this.hoveredCube.userData.targetScale = 1.0;
+                this.hoveredCube.userData.targetPush = 0.0;
+                this.hoveredCube.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
               }
-              this.hoveredSprite = hitSprite;
-              hitSprite.scale.set(1.75, 0.52, 1);
+              this.hoveredCube = hitCube;
+              hitCube.userData.targetScale = 1.34;
+              hitCube.userData.targetPush = 0.42;
+              hitCube.userData.frontMat.emissiveIntensity = 0.85;
               this.canvas.style.cursor = 'pointer';
 
               if (hoverPill) {
-                hoverPill.textContent = hitSprite.userData.tech.name.toUpperCase() + ' // CLICK TO FILTER';
+                hoverPill.textContent = `${hitCube.userData.tech.name.toUpperCase()} // 3D CUBE [CLICK TO FILTER]`;
                 hoverPill.classList.remove('hidden');
               }
             }
           } else {
-            if (this.hoveredSprite) {
-              this.hoveredSprite.scale.copy(this.hoveredSprite.userData.originalScale);
-              this.hoveredSprite = null;
+            if (this.hoveredCube) {
+              this.hoveredCube.userData.targetScale = 1.0;
+              this.hoveredCube.userData.targetPush = 0.0;
+              this.hoveredCube.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
+              this.hoveredCube = null;
               this.canvas.style.cursor = 'grab';
 
               if (hoverPill) {
