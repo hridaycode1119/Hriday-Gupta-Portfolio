@@ -1497,12 +1497,12 @@
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h3 class="font-nav-link text-nav-link font-bold uppercase tracking-wider text-on-surface dark:text-white">
-                Suspended 3D Skill Cube Sphere // Aesthetic Matrix
+                Suspended 3D Skill Tile Sphere // Neural Network Matrix
               </h3>
             </div>
             <div class="flex items-center gap-2">
               <span id="orbit-filter-status" class="px-3.5 py-1 rounded-full bg-surface-container/80 dark:bg-white/10 backdrop-blur-md font-label-mono text-[11px] text-secondary dark:text-gray-300 uppercase tracking-wider border border-outline-variant/20 dark:border-white/10 shadow-sm">
-                Click 3D Cube to Filter Projects
+                Click 3D Tile to Filter Projects
               </span>
             </div>
           </div>
@@ -1515,10 +1515,10 @@
             <div class="absolute bottom-2 inset-x-2 sm:inset-x-6 flex items-center justify-between pointer-events-none z-10">
               <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container/70 dark:bg-black/50 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-wider">
                 <span class="material-symbols-outlined text-[14px]">view_in_ar</span>
-                <span>Drag to Orbit Sphere • Click Cube to Filter</span>
+                <span>Drag to Orbit Sphere • Click Tile to Filter</span>
               </div>
               <div id="hovered-tag-pill" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold tracking-wider shadow-md transition-all">
-                <span>CUBE READY</span>
+                <span>TILE READY</span>
               </div>
             </div>
           </div>
@@ -3650,7 +3650,7 @@
         }
       }
 
-      // 16. Interactive 3D Skill Cube Sphere / Aesthetic Matrix (Three.js WebGL)
+      // 16. Interactive 3D Skill Tile Sphere / Neural Network Matrix (Three.js WebGL)
       class SkillsTechOrbit3D {
         constructor() {
           this.canvas = document.getElementById('skills-tech-orbit-canvas');
@@ -3660,7 +3660,7 @@
           this.scene = new THREE.Scene();
 
           this.width = this.container.clientWidth || 600;
-          this.height = this.container.clientHeight || 440;
+          this.height = this.container.clientHeight || 480;
 
           this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 100);
           this.camera.position.z = 6.4;
@@ -3701,20 +3701,23 @@
             { name: 'LangChain', cat: 'ai', pill: 'RAG' }
           ];
 
-          this.cubeMeshes = [];
+          this.tileMeshes = [];
+          this.networkEdges = [];
+          this.coreAnchors = [];
+          this.networkPulses = [];
           this.isDragging = false;
           this.prevMousePos = { x: 0, y: 0 };
           this.angularVelocity = { x: 0.001, y: 0.003 };
           this.raycaster = new THREE.Raycaster();
           this.mouse = new THREE.Vector2(-100, -100);
-          this.hoveredCube = null;
+          this.hoveredTile = null;
           this.isVisible = true;
           this.animFrameId = null;
 
           this.initLighting();
           this.buildCelestialSphere();
-          this.buildSkillCubes();
-          this.buildConstellationWeb();
+          this.buildSkillTiles();
+          this.buildBackNetwork();
           this.bindEvents();
           this.start();
         }
@@ -3794,7 +3797,7 @@
           const dustGeo = new THREE.BufferGeometry();
           const dustPositions = new Float32Array(dustCount * 3);
           for (let i = 0; i < dustCount; i++) {
-            const rad = 1.4 + Math.random() * 0.9;
+            const rad = 1.35 + Math.random() * 0.95;
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.acos((Math.random() * 2) - 1);
             dustPositions[i * 3] = rad * Math.sin(phi) * Math.cos(theta);
@@ -3812,77 +3815,207 @@
           this.rootGroup.add(this.dustPoints);
         }
 
-        createCubeFrontTexture(name, cat, pill) {
+        createTileFrontTexture(name, cat, pill) {
           const canvas = document.createElement('canvas');
           canvas.width = 512;
-          canvas.height = 256;
+          canvas.height = 512;
           const ctx = canvas.getContext('2d');
           const isD = this.isDark;
 
-          // Dark Chamfered Glass Background
-          const grad = ctx.createLinearGradient(0, 0, 512, 256);
-          if (isD) {
-            grad.addColorStop(0, '#0c121e');
-            grad.addColorStop(0.5, '#111a28');
-            grad.addColorStop(1, '#080d14');
-          } else {
-            grad.addColorStop(0, '#ffffff');
-            grad.addColorStop(0.5, '#f1f5f9');
-            grad.addColorStop(1, '#e2e8f0');
-          }
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, 512, 256);
-
-          // Outer Glow Border
-          const accentColor = cat === 'ai' ? (isD ? '#00e575' : '#007336') :
+          const accentColor = cat === 'ai' ? (isD ? '#00e575' : '#008a44') :
                              cat === 'fullstack' ? (isD ? '#38bdf8' : '#0284c7') :
                              cat === 'data' ? (isD ? '#a855f7' : '#7e22ce') :
                              (isD ? '#eab308' : '#ca8a04');
 
-          ctx.strokeStyle = accentColor;
-          ctx.lineWidth = 8;
-          ctx.strokeRect(6, 6, 500, 244);
+          const drawRoundRect = (x, y, w, h, r) => {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+          };
 
-          // Top Header Pill Badge
-          ctx.fillStyle = accentColor;
-          ctx.beginPath();
-          ctx.arc(36, 46, 10, 0, Math.PI * 2);
+          // Background Gradient
+          const bgGrad = ctx.createLinearGradient(0, 0, 512, 512);
+          if (isD) {
+            bgGrad.addColorStop(0, '#090e17');
+            bgGrad.addColorStop(0.5, '#121c2b');
+            bgGrad.addColorStop(1, '#060a12');
+          } else {
+            bgGrad.addColorStop(0, '#ffffff');
+            bgGrad.addColorStop(0.5, '#f1f5f9');
+            bgGrad.addColorStop(1, '#e2e8f0');
+          }
+          drawRoundRect(10, 10, 492, 492, 44);
+          ctx.fillStyle = bgGrad;
           ctx.fill();
 
-          ctx.font = 'bold 22px "Space Grotesk", sans-serif';
+          // Subtle Grid Background Dots inside tile
+          ctx.fillStyle = isD ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)';
+          for (let gx = 60; gx <= 452; gx += 44) {
+            for (let gy = 60; gy <= 452; gy += 44) {
+              ctx.beginPath();
+              ctx.arc(gx, gy, 2, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+
+          // Outer Accent Border
+          drawRoundRect(10, 10, 492, 492, 44);
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 10;
+          ctx.stroke();
+
+          // Inner Subtle Hairline
+          drawRoundRect(24, 24, 464, 464, 32);
+          ctx.strokeStyle = isD ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Top Header Section: Category Glyph & Status Dot
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.arc(66, 76, 12, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.font = 'bold 26px "Space Grotesk", sans-serif';
           ctx.fillStyle = accentColor;
           ctx.textAlign = 'left';
           ctx.textBaseline = 'middle';
-          ctx.fillText(`// ${pill}`, 56, 46);
+          ctx.fillText('// ' + pill, 92, 76);
 
-          // Tech Name Headline
-          ctx.font = 'bold 44px "Space Grotesk", sans-serif';
-          ctx.fillStyle = isD ? '#ffffff' : '#0f172a';
-          ctx.textAlign = 'left';
+          // Divider rule under header
+          ctx.strokeStyle = isD ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(40, 116);
+          ctx.lineTo(472, 116);
+          ctx.stroke();
+
+          // Center: Skill Headline Name
+          ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText(name, 32, 130);
+          const fontSize = name.length > 13 ? 42 : (name.length > 9 ? 48 : 56);
+          ctx.font = 'bold ' + fontSize + 'px "Space Grotesk", sans-serif';
+          ctx.fillStyle = isD ? '#ffffff' : '#0f172a';
+          ctx.fillText(name, 256, 260);
 
-          // Bottom Telemetry Bar
-          ctx.fillStyle = isD ? 'rgba(255,255,255,0.45)' : 'rgba(15,23,42,0.6)';
-          ctx.font = '500 20px monospace';
-          ctx.fillText(`TAG // 3D CUBE ACTIVE`, 32, 205);
+          // Subtitle / Category Label
+          ctx.font = '500 22px monospace';
+          ctx.fillStyle = isD ? 'rgba(255,255,255,0.5)' : 'rgba(15,23,42,0.6)';
+          ctx.fillText(cat.toUpperCase() + ' // STACK NODE', 256, 335);
+
+          // Bottom Telemetry Tag Pill
+          drawRoundRect(106, 396, 300, 52, 26);
+          ctx.fillStyle = isD ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)';
+          ctx.fill();
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          ctx.font = 'bold 20px monospace';
+          ctx.fillStyle = accentColor;
+          ctx.fillText('[NETWORK TILE]', 256, 422);
 
           return new THREE.CanvasTexture(canvas);
         }
 
-        buildSkillCubes() {
+        createTileBackTexture(cat) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 256;
+          canvas.height = 256;
+          const ctx = canvas.getContext('2d');
+          const isD = this.isDark;
+
+          const accentColor = cat === 'ai' ? (isD ? '#00e575' : '#008a44') :
+                             cat === 'fullstack' ? (isD ? '#38bdf8' : '#0284c7') :
+                             cat === 'data' ? (isD ? '#a855f7' : '#7e22ce') :
+                             (isD ? '#eab308' : '#ca8a04');
+
+          const drawRoundRect = (x, y, w, h, r) => {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+          };
+
+          // Dark Titanium backplate
+          drawRoundRect(6, 6, 244, 244, 22);
+          ctx.fillStyle = isD ? '#0b111a' : '#1e293b';
+          ctx.fill();
+          ctx.strokeStyle = isD ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          // Central Network Connection Port Socket
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.arc(128, 128, 64, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Reticle Ring
+          ctx.setLineDash([4, 6]);
+          ctx.strokeStyle = isD ? '#38bdf8' : '#0284c7';
+          ctx.beginPath();
+          ctx.arc(128, 128, 44, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Glowing Junction Terminal Port
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.arc(128, 128, 22, 0, Math.PI * 2);
+          ctx.fill();
+
+          // High-intensity white core socket
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(128, 128, 9, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Label
+          ctx.font = 'bold 13px monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.5)';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('NETWORK PORT // BUS', 128, 218);
+
+          return new THREE.CanvasTexture(canvas);
+        }
+
+        getTileBackPoint(i) {
+          const tile = this.tileMeshes[i];
+          if (!tile) return new THREE.Vector3();
+          return tile.position.clone().addScaledVector(tile.userData.normal, -0.026);
+        }
+
+        buildSkillTiles() {
           const isD = this.isDark;
           const count = this.techNodes.length;
           const phi = Math.PI * (3 - Math.sqrt(5));
 
-          // Body Material for sides and back of cubes
-          this.cubeSideMat = new THREE.MeshStandardMaterial({
+          // Edge Material for slim sides of square tiles
+          this.tileEdgeMat = new THREE.MeshStandardMaterial({
             color: isD ? 0x0e1520 : 0x334155,
             roughness: 0.25,
             metalness: 0.85
           });
 
-          this.cubePositions = [];
+          this.coreAnchors = [];
 
           for (let i = 0; i < count; i++) {
             const y = 1 - (i / (count - 1)) * 2;
@@ -3893,85 +4026,175 @@
 
             const normal = new THREE.Vector3(x, y, z).normalize();
             const pos = normal.clone().multiplyScalar(this.orbitRadius);
-            this.cubePositions.push(pos.clone());
+            this.coreAnchors.push(normal.clone().multiplyScalar(0.95));
 
             const tech = this.techNodes[i];
-            const frontTex = this.createCubeFrontTexture(tech.name, tech.cat, tech.pill);
+            const frontTex = this.createTileFrontTexture(tech.name, tech.cat, tech.pill);
+            const backTex = this.createTileBackTexture(tech.cat);
 
             const frontMat = new THREE.MeshStandardMaterial({
               map: frontTex,
               roughness: 0.2,
-              metalness: 0.4,
+              metalness: 0.35,
               emissive: isD ? 0x00e575 : 0x007336,
               emissiveMap: frontTex,
               emissiveIntensity: isD ? 0.35 : 0.15
             });
 
+            const backMat = new THREE.MeshStandardMaterial({
+              map: backTex,
+              roughness: 0.3,
+              metalness: 0.7,
+              emissive: isD ? 0x38bdf8 : 0x0284c7,
+              emissiveMap: backTex,
+              emissiveIntensity: isD ? 0.3 : 0.15
+            });
+
             // 6 materials for BoxGeometry (right, left, top, bottom, front, back)
             const materials = [
-              this.cubeSideMat, this.cubeSideMat,
-              this.cubeSideMat, this.cubeSideMat,
+              this.tileEdgeMat, this.tileEdgeMat,
+              this.tileEdgeMat, this.tileEdgeMat,
               frontMat,
-              this.cubeSideMat
+              backMat
             ];
 
-            // 3D Cuboid Block
-            const cubeGeo = new THREE.BoxGeometry(0.86, 0.46, 0.22);
-            const cube = new THREE.Mesh(cubeGeo, materials);
-            cube.position.copy(pos);
+            // 3D Square Tile (0.60 x 0.60 x 0.05)
+            const tileGeo = new THREE.BoxGeometry(0.60, 0.60, 0.05);
+            const tile = new THREE.Mesh(tileGeo, materials);
+            tile.position.copy(pos);
 
-            // Orient cube radially outward from sphere center
-            cube.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+            // Orient square tile radially outward from sphere center
+            tile.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
 
-            cube.userData = {
+            tile.userData = {
               tech: tech,
               basePos: pos.clone(),
               normal: normal.clone(),
-              baseScale: new THREE.Vector3(1, 1, 1),
               currentScale: 1,
               targetScale: 1,
               currentPush: 0,
               targetPush: 0,
-              frontMat: frontMat
+              frontMat: frontMat,
+              backMat: backMat
             };
 
-            this.rootGroup.add(cube);
-            this.cubeMeshes.push(cube);
+            this.rootGroup.add(tile);
+            this.tileMeshes.push(tile);
           }
         }
 
-        buildConstellationWeb() {
+        buildBackNetwork() {
           const isD = this.isDark;
-          const linePoints = [];
-          const count = this.cubePositions.length;
+          const count = this.tileMeshes.length;
+          const edgeSet = new Set();
+          this.networkEdges = [];
 
-          // Connect each cube to 2 closest neighbor cubes
+          // Connect each tile to 3 closest neighbor tiles at the back
           for (let i = 0; i < count; i++) {
-            const p1 = this.cubePositions[i];
+            const p1 = this.tileMeshes[i].userData.basePos;
             const dists = [];
             for (let j = 0; j < count; j++) {
               if (i === j) continue;
-              const p2 = this.cubePositions[j];
-              dists.push({ j: j, dist: p1.distanceTo(p2) });
+              const p2 = this.tileMeshes[j].userData.basePos;
+              dists.push({ j, d: p1.distanceTo(p2) });
             }
-            dists.sort((a, b) => a.dist - b.dist);
-
-            for (let k = 0; k < 2 && k < dists.length; k++) {
-              const p2 = this.cubePositions[dists[k].j];
-              linePoints.push(p1.x, p1.y, p1.z);
-              linePoints.push(p2.x, p2.y, p2.z);
+            dists.sort((a, b) => a.d - b.d);
+            for (let k = 0; k < 3 && k < dists.length; k++) {
+              const j = dists[k].j;
+              const key = Math.min(i, j) + '_' + Math.max(i, j);
+              if (!edgeSet.has(key)) {
+                edgeSet.add(key);
+                this.networkEdges.push({ i: Math.min(i, j), j: Math.max(i, j) });
+              }
             }
           }
 
-          const lineGeo = new THREE.BufferGeometry();
-          lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePoints, 3));
-          this.webMat = new THREE.LineBasicMaterial({
+          const totalSegments = this.networkEdges.length + count;
+          const linePositions = new Float32Array(totalSegments * 2 * 3);
+          this.networkLineGeo = new THREE.BufferGeometry();
+          this.networkLineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+
+          this.networkLineMat = new THREE.LineBasicMaterial({
             color: isD ? 0x00e575 : 0x0284c7,
             transparent: true,
-            opacity: isD ? 0.22 : 0.15
+            opacity: isD ? 0.38 : 0.28
           });
-          this.webLines = new THREE.LineSegments(lineGeo, this.webMat);
-          this.rootGroup.add(this.webLines);
+          this.networkLines = new THREE.LineSegments(this.networkLineGeo, this.networkLineMat);
+          this.rootGroup.add(this.networkLines);
+
+          // Network Signal Pulses
+          this.networkPulses = [];
+          for (let p = 0; p < 16; p++) {
+            const pGeo = new THREE.SphereGeometry(0.026, 8, 8);
+            const pMat = new THREE.MeshBasicMaterial({
+              color: isD ? 0x38bdf8 : 0x0284c7,
+              transparent: true,
+              opacity: 0.85
+            });
+            const pMesh = new THREE.Mesh(pGeo, pMat);
+            this.rootGroup.add(pMesh);
+            this.networkPulses.push({
+              mesh: pMesh,
+              edgeIndex: Math.floor(Math.random() * totalSegments),
+              t: Math.random(),
+              speed: 0.007 + Math.random() * 0.012
+            });
+          }
+
+          this.updateNetworkLines();
+        }
+
+        updateNetworkLines() {
+          if (!this.networkLineGeo) return;
+          const posAttr = this.networkLineGeo.attributes.position;
+          const positions = posAttr.array;
+          let ptr = 0;
+
+          // 1. Inter-tile back-to-back lines
+          for (let k = 0; k < this.networkEdges.length; k++) {
+            const edge = this.networkEdges[k];
+            const p1 = this.getTileBackPoint(edge.i);
+            const p2 = this.getTileBackPoint(edge.j);
+            positions[ptr++] = p1.x; positions[ptr++] = p1.y; positions[ptr++] = p1.z;
+            positions[ptr++] = p2.x; positions[ptr++] = p2.y; positions[ptr++] = p2.z;
+          }
+
+          // 2. Tile back-to-core struts
+          const count = this.tileMeshes.length;
+          for (let i = 0; i < count; i++) {
+            const p1 = this.getTileBackPoint(i);
+            const pCore = this.coreAnchors[i];
+            positions[ptr++] = p1.x; positions[ptr++] = p1.y; positions[ptr++] = p1.z;
+            positions[ptr++] = pCore.x; positions[ptr++] = pCore.y; positions[ptr++] = pCore.z;
+          }
+
+          posAttr.needsUpdate = true;
+        }
+
+        updateNetworkPulses() {
+          if (!this.networkPulses || !this.networkLineGeo) return;
+          const positions = this.networkLineGeo.attributes.position.array;
+          const totalSegments = this.networkEdges.length + this.tileMeshes.length;
+          if (totalSegments === 0) return;
+
+          for (let p = 0; p < this.networkPulses.length; p++) {
+            const pulse = this.networkPulses[p];
+            pulse.t += pulse.speed;
+            if (pulse.t > 1.0) {
+              pulse.t = 0;
+              pulse.edgeIndex = Math.floor(Math.random() * totalSegments);
+            }
+            const segIdx = pulse.edgeIndex;
+            const i1 = segIdx * 6;
+            const x1 = positions[i1], y1 = positions[i1 + 1], z1 = positions[i1 + 2];
+            const x2 = positions[i1 + 3], y2 = positions[i1 + 4], z2 = positions[i1 + 5];
+
+            pulse.mesh.position.set(
+              x1 + (x2 - x1) * pulse.t,
+              y1 + (y2 - y1) * pulse.t,
+              z1 + (z2 - z1) * pulse.t
+            );
+          }
         }
 
         updateColors() {
@@ -3983,25 +4206,36 @@
           }
           if (this.ringMat1) this.ringMat1.color.setHex(isD ? 0x00e575 : 0x009144);
           if (this.ringMat2) this.ringMat2.color.setHex(isD ? 0x38bdf8 : 0x0284c7);
-          if (this.webMat) this.webMat.color.setHex(isD ? 0x00e575 : 0x0284c7);
+          if (this.networkLineMat) this.networkLineMat.color.setHex(isD ? 0x00e575 : 0x0284c7);
           if (this.dustMat) this.dustMat.color.setHex(isD ? 0x4ae176 : 0x0284c7);
-          if (this.cubeSideMat) this.cubeSideMat.color.setHex(isD ? 0x0e1520 : 0x334155);
+          if (this.tileEdgeMat) this.tileEdgeMat.color.setHex(isD ? 0x0e1520 : 0x334155);
 
-          this.cubeMeshes.forEach(cube => {
-            const tech = cube.userData.tech;
-            const newTex = this.createCubeFrontTexture(tech.name, tech.cat, tech.pill);
-            cube.userData.frontMat.map = newTex;
-            cube.userData.frontMat.emissiveMap = newTex;
-            cube.userData.frontMat.emissive.setHex(isD ? 0x00e575 : 0x007336);
-            cube.userData.frontMat.emissiveIntensity = isD ? 0.35 : 0.15;
-            cube.userData.frontMat.needsUpdate = true;
+          this.tileMeshes.forEach(tile => {
+            const tech = tile.userData.tech;
+            const newFrontTex = this.createTileFrontTexture(tech.name, tech.cat, tech.pill);
+            tile.userData.frontMat.map = newFrontTex;
+            tile.userData.frontMat.emissiveMap = newFrontTex;
+            tile.userData.frontMat.emissive.setHex(isD ? 0x00e575 : 0x007336);
+            tile.userData.frontMat.emissiveIntensity = isD ? 0.35 : 0.15;
+            tile.userData.frontMat.needsUpdate = true;
+
+            const newBackTex = this.createTileBackTexture(tech.cat);
+            tile.userData.backMat.map = newBackTex;
+            tile.userData.backMat.emissiveMap = newBackTex;
+            tile.userData.backMat.emissive.setHex(isD ? 0x38bdf8 : 0x0284c7);
+            tile.userData.backMat.emissiveIntensity = isD ? 0.3 : 0.15;
+            tile.userData.backMat.needsUpdate = true;
+          });
+
+          this.networkPulses.forEach(pulse => {
+            pulse.mesh.material.color.setHex(isD ? 0x38bdf8 : 0x0284c7);
           });
         }
 
         filterProjects(techName) {
           const statusEl = document.getElementById('orbit-filter-status');
           if (statusEl) {
-            statusEl.textContent = `FILTER: ${techName.toUpperCase()} [3D CUBE]`;
+            statusEl.textContent = 'FILTER: ' + techName.toUpperCase() + ' [3D TILE]';
             statusEl.className = 'px-3.5 py-1 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-label-mono text-[11px] font-bold uppercase tracking-wider shadow-sm transition-all';
           }
 
@@ -4080,8 +4314,8 @@
           });
 
           this.canvas.addEventListener('click', () => {
-            if (this.hoveredCube) {
-              this.filterProjects(this.hoveredCube.userData.tech.name);
+            if (this.hoveredTile) {
+              this.filterProjects(this.hoveredTile.userData.tech.name);
             }
           });
 
@@ -4142,46 +4376,50 @@
             this.dustPoints.rotation.y -= 0.0018;
           }
 
-          // Smooth Cube Hover Transitions (Push outward & Scale)
-          this.cubeMeshes.forEach(cube => {
-            const ud = cube.userData;
+          // Smooth Square Tile Hover Transitions (Push outward along normal & Scale)
+          this.tileMeshes.forEach(tile => {
+            const ud = tile.userData;
             ud.currentScale += (ud.targetScale - ud.currentScale) * 0.12;
             ud.currentPush += (ud.targetPush - ud.currentPush) * 0.12;
 
-            cube.scale.setScalar(ud.currentScale);
-            cube.position.copy(ud.basePos).addScaledVector(ud.normal, ud.currentPush);
+            tile.scale.setScalar(ud.currentScale);
+            tile.position.copy(ud.basePos).addScaledVector(ud.normal, ud.currentPush);
           });
+
+          // Dynamic network line stretching & pulses
+          this.updateNetworkLines();
+          this.updateNetworkPulses();
 
           // Raycasting Detection
           this.raycaster.setFromCamera(this.mouse, this.camera);
-          const intersects = this.raycaster.intersectObjects(this.cubeMeshes);
+          const intersects = this.raycaster.intersectObjects(this.tileMeshes);
           const hoverPill = document.getElementById('hovered-tag-pill');
 
           if (intersects.length > 0) {
-            const hitCube = intersects[0].object;
-            if (this.hoveredCube !== hitCube) {
-              if (this.hoveredCube) {
-                this.hoveredCube.userData.targetScale = 1.0;
-                this.hoveredCube.userData.targetPush = 0.0;
-                this.hoveredCube.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
+            const hitTile = intersects[0].object;
+            if (this.hoveredTile !== hitTile) {
+              if (this.hoveredTile) {
+                this.hoveredTile.userData.targetScale = 1.0;
+                this.hoveredTile.userData.targetPush = 0.0;
+                this.hoveredTile.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
               }
-              this.hoveredCube = hitCube;
-              hitCube.userData.targetScale = 1.34;
-              hitCube.userData.targetPush = 0.42;
-              hitCube.userData.frontMat.emissiveIntensity = 0.85;
+              this.hoveredTile = hitTile;
+              hitTile.userData.targetScale = 1.32;
+              hitTile.userData.targetPush = 0.42;
+              hitTile.userData.frontMat.emissiveIntensity = 0.9;
               this.canvas.style.cursor = 'pointer';
 
               if (hoverPill) {
-                hoverPill.textContent = `${hitCube.userData.tech.name.toUpperCase()} // 3D CUBE [CLICK TO FILTER]`;
+                hoverPill.textContent = hitTile.userData.tech.name.toUpperCase() + ' // 3D TILE [CLICK TO FILTER]';
                 hoverPill.classList.remove('hidden');
               }
             }
           } else {
-            if (this.hoveredCube) {
-              this.hoveredCube.userData.targetScale = 1.0;
-              this.hoveredCube.userData.targetPush = 0.0;
-              this.hoveredCube.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
-              this.hoveredCube = null;
+            if (this.hoveredTile) {
+              this.hoveredTile.userData.targetScale = 1.0;
+              this.hoveredTile.userData.targetPush = 0.0;
+              this.hoveredTile.userData.frontMat.emissiveIntensity = this.isDark ? 0.35 : 0.15;
+              this.hoveredTile = null;
               this.canvas.style.cursor = 'grab';
 
               if (hoverPill) {
