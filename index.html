@@ -14,6 +14,8 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js (r128) WebGL 3D Graphics Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -496,6 +498,49 @@
               <span class="inline-block mx-2 sm:mx-3 select-none">&nbsp;</span>
               <span id="hero-word-last" class="inline-block will-change-transform scramble-hover">Gupta</span>
             </h1>
+          </div>
+        </div>
+
+        <!-- Interactive 3D Cybernetic AI Core Centerpiece -->
+        <div id="ai-core-wrapper" class="relative z-10 w-full flex flex-col items-center justify-center my-space-sm sm:my-space-md select-none">
+          <div class="relative w-full max-w-[560px] h-[260px] sm:h-[320px] md:h-[350px] rounded-3xl overflow-hidden flex items-center justify-center">
+            
+            <!-- Canvas for Three.js 3D WebGL Scene -->
+            <canvas id="hero-3d-core-canvas" class="w-full h-full cursor-grab active:cursor-grabbing outline-none"></canvas>
+
+            <!-- Floating Top Telemetry Pill -->
+            <div class="absolute top-3 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
+              <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/80 dark:bg-black/50 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[11px] text-on-surface dark:text-gray-300 uppercase tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>NEURAL CORE // ACTIVE</span>
+              </div>
+              <div class="hidden sm:flex items-center gap-1 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-widest bg-surface-container-high/60 dark:bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-outline-variant/20 dark:border-white/5">
+                <span>WebGL 3D GPU</span>
+              </div>
+            </div>
+
+            <!-- Bottom Mode Selector & Interaction Pill -->
+            <div class="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-center sm:justify-between gap-2 z-10">
+              <!-- Mode Toggles -->
+              <div id="core-mode-group" class="flex items-center gap-1 p-1 rounded-full bg-surface-container-high/80 dark:bg-black/60 backdrop-blur-md border border-outline-variant/30 dark:border-white/10">
+                <button type="button" data-core-mode="lattice" class="core-mode-btn px-3 py-1 rounded-full font-label-mono text-[11px] tracking-wider transition-all duration-200 bg-primary dark:bg-white text-on-primary dark:text-black font-semibold shadow-sm">
+                  LATTICE
+                </button>
+                <button type="button" data-core-mode="torus" class="core-mode-btn px-3 py-1 rounded-full font-label-mono text-[11px] tracking-wider transition-all duration-200 text-secondary dark:text-gray-400 hover:text-on-surface dark:hover:text-white">
+                  TORUS
+                </button>
+                <button type="button" data-core-mode="matrix" class="core-mode-btn px-3 py-1 rounded-full font-label-mono text-[11px] tracking-wider transition-all duration-200 text-secondary dark:text-gray-400 hover:text-on-surface dark:hover:text-white">
+                  SYNAPSE
+                </button>
+              </div>
+
+              <!-- Interaction Hint -->
+              <div class="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/60 dark:bg-black/40 backdrop-blur-md border border-outline-variant/20 dark:border-white/5 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-wider pointer-events-none">
+                <span class="material-symbols-outlined text-[14px]">touch_app</span>
+                <span>Drag to Rotate • Click to Pulse</span>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -1526,31 +1571,52 @@
       <section id="contact" class="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin-desktop py-space-3xl border-t border-outline-variant/30 dark:border-white/10">
         
         <div id="contact-card" class="linear-glow-card relative overflow-hidden rounded-[2.5rem] bg-surface-container-high dark:bg-[#181919] p-space-xl md:p-space-3xl border border-outline-variant/20 dark:border-white/5">
-          <div class="relative z-10 max-w-3xl flex flex-col gap-space-md overflow-hidden">
-            <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
-            <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[54px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
-              Let's engineer something exceptional together.
-            </h2>
-            <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-gray-300">
-              Whether you have an opening for an AI/ML Engineer or Full-Stack Developer role, a collaboration inquiry, or a project to consult on, feel free to reach out directly.
-            </p>
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+            
+            <!-- Left Column: Contact Details & Action CTAs (col-span-7) -->
+            <div class="lg:col-span-7 flex flex-col gap-space-md">
+              <span class="font-label-mono text-label-mono uppercase tracking-widest text-secondary dark:text-gray-400">[Start A Conversation]</span>
+              <h2 class="scroll-slide-heading font-display-xl text-headline-lg-mobile sm:text-headline-lg md:text-[50px] text-on-surface dark:text-white font-extrabold tracking-tight leading-tight will-change-transform inline-block" data-direction="left">
+                Let's engineer something exceptional together.
+              </h2>
+              <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-gray-300">
+                Whether you have an opening for an AI/ML Engineer or Full-Stack Developer role, a collaboration inquiry, or a project to consult on, feel free to reach out directly.
+              </p>
 
-            <div class="pt-space-lg flex flex-wrap items-center gap-space-md">
-              <a href="mailto:hriday.code1119@gmail.com" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-nav-link text-sm font-bold uppercase tracking-wider hover:opacity-90 transition-opacity shadow-md">
-                <span class="material-symbols-outlined text-[18px]">mail</span>
-                <span>Send Email</span>
-              </a>
+              <div class="pt-space-md flex flex-wrap items-center gap-space-md">
+                <a href="mailto:hriday.code1119@gmail.com" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary dark:bg-white text-on-primary dark:text-black font-nav-link text-sm font-bold uppercase tracking-wider hover:opacity-90 transition-opacity shadow-md">
+                  <span class="material-symbols-outlined text-[18px]">mail</span>
+                  <span>Send Email</span>
+                </a>
 
-              <a href="tel:+917678107310" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-surface-container-lowest dark:bg-white/10 text-on-surface dark:text-white font-nav-link text-sm font-bold uppercase tracking-wider hover:bg-surface-container-high dark:hover:bg-white/20 transition-colors border border-outline-variant/30 dark:border-white/10">
-                <span class="material-symbols-outlined text-[18px]">call</span>
-                <span>+91-7678107310</span>
-              </a>
+                <a href="tel:+917678107310" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-surface-container-lowest dark:bg-white/10 text-on-surface dark:text-white font-nav-link text-sm font-bold uppercase tracking-wider hover:bg-surface-container-high dark:hover:bg-white/20 transition-colors border border-outline-variant/30 dark:border-white/10">
+                  <span class="material-symbols-outlined text-[18px]">call</span>
+                  <span>+91-7678107310</span>
+                </a>
 
-              <button id="copy-email-btn" type="button" class="inline-flex items-center gap-1.5 px-4 py-3.5 rounded-full bg-surface-container dark:bg-white/5 text-on-surface dark:text-gray-300 font-label-mono text-xs uppercase tracking-wider hover:bg-surface-container-highest dark:hover:bg-white/10 transition-colors">
-                <span class="material-symbols-outlined text-[16px]">content_copy</span>
-                <span id="copy-status">Copy Email</span>
-              </button>
+                <button id="copy-email-btn" type="button" class="inline-flex items-center gap-1.5 px-4 py-3.5 rounded-full bg-surface-container dark:bg-white/5 text-on-surface dark:text-gray-300 font-label-mono text-xs uppercase tracking-wider hover:bg-surface-container-highest dark:hover:bg-white/10 transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                  <span id="copy-status">Copy Email</span>
+                </button>
+              </div>
             </div>
+
+            <!-- Right Column: Interactive 3D Dot-Matrix Global Network Globe (col-span-5) -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center relative w-full aspect-square max-w-[380px] lg:max-w-[420px] mx-auto min-h-[300px]">
+              <div class="relative w-full h-full rounded-3xl overflow-hidden flex items-center justify-center">
+                <!-- 3D Globe Canvas -->
+                <canvas id="contact-globe-canvas" class="w-full h-full cursor-grab active:cursor-grabbing outline-none select-none"></canvas>
+                
+                <!-- Globe Telemetry Indicator -->
+                <div class="absolute bottom-2 flex items-center justify-center pointer-events-none z-10">
+                  <span class="px-3 py-1 rounded-full bg-surface-container-high/80 dark:bg-black/60 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 font-label-mono text-[10px] text-secondary dark:text-gray-400 uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>NOIDA HUB • GLOBAL NETWORK (DRAG 3D)</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div class="relative z-10 mt-space-2xl pt-space-xl border-t border-outline-variant/30 dark:border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-space-md font-label-mono text-xs text-on-surface-variant dark:text-gray-400">
@@ -2801,11 +2867,683 @@
         document.addEventListener('mouseleave', onMouseLeave, { passive: true });
       }
 
+      // 15. Interactive 3D Cybernetic AI Core Engine (Three.js WebGL)
+      class Hero3DAICore {
+        constructor() {
+          this.canvas = document.getElementById('hero-3d-core-canvas');
+          if (!this.canvas || typeof THREE === 'undefined') return;
+
+          this.container = this.canvas.parentElement;
+          this.scene = new THREE.Scene();
+
+          this.width = this.container.clientWidth || 400;
+          this.height = this.container.clientHeight || 320;
+
+          this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 100);
+          this.camera.position.z = 6.2;
+
+          this.renderer = new THREE.WebGLRenderer({
+            canvas: this.canvas,
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+          });
+          this.renderer.setSize(this.width, this.height);
+          this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+          this.rootGroup = new THREE.Group();
+          this.scene.add(this.rootGroup);
+
+          this.isDragging = false;
+          this.prevMousePos = { x: 0, y: 0 };
+          this.angularVelocity = { x: 0.002, y: 0.005 };
+          this.targetParallax = { x: 0, y: 0 };
+          this.currentParallax = { x: 0, y: 0 };
+          this.pulseEnergy = 0;
+          this.currentMode = 'lattice';
+          this.isVisible = true;
+          this.animFrameId = null;
+
+          this.initLighting();
+          this.buildModes();
+          this.bindEvents();
+          this.updateColors();
+          this.start();
+        }
+
+        get isDark() {
+          return document.documentElement.classList.contains('dark');
+        }
+
+        initLighting() {
+          this.ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+          this.scene.add(this.ambientLight);
+
+          this.dirLight1 = new THREE.DirectionalLight(0xffffff, 1.2);
+          this.dirLight1.position.set(5, 5, 5);
+          this.scene.add(this.dirLight1);
+
+          this.coreLight = new THREE.PointLight(0x38bdf8, 2.0, 10);
+          this.coreLight.position.set(0, 0, 0);
+          this.rootGroup.add(this.coreLight);
+        }
+
+        buildModes() {
+          // Mode 1: Lattice Core Group
+          this.latticeGroup = new THREE.Group();
+          
+          const outerGeo = new THREE.IcosahedronGeometry(1.85, 1);
+          this.outerMat = new THREE.MeshBasicMaterial({
+            wireframe: true,
+            transparent: true,
+            opacity: 0.65,
+            color: 0x38bdf8
+          });
+          this.outerMesh = new THREE.Mesh(outerGeo, this.outerMat);
+          this.latticeGroup.add(this.outerMesh);
+
+          const innerGeo = new THREE.IcosahedronGeometry(0.85, 0);
+          this.innerMat = new THREE.MeshStandardMaterial({
+            roughness: 0.25,
+            metalness: 0.85,
+            flatShading: true,
+            color: 0x0f172a
+          });
+          this.innerMesh = new THREE.Mesh(innerGeo, this.innerMat);
+          this.latticeGroup.add(this.innerMesh);
+
+          const ring1Geo = new THREE.TorusGeometry(2.25, 0.02, 16, 90);
+          this.ring1Mat = new THREE.MeshBasicMaterial({ color: 0x4ae176, transparent: true, opacity: 0.75 });
+          this.ring1 = new THREE.Mesh(ring1Geo, this.ring1Mat);
+          this.ring1.rotation.x = Math.PI * 0.35;
+          this.latticeGroup.add(this.ring1);
+
+          const ring2Geo = new THREE.TorusGeometry(2.55, 0.018, 16, 90);
+          this.ring2Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 });
+          this.ring2 = new THREE.Mesh(ring2Geo, this.ring2Mat);
+          this.ring2.rotation.y = Math.PI * 0.45;
+          this.latticeGroup.add(this.ring2);
+
+          this.rootGroup.add(this.latticeGroup);
+
+          // Mode 2: Quantum Torus Group
+          this.torusGroup = new THREE.Group();
+          this.torusGroup.visible = false;
+          this.torusGroup.scale.set(0.001, 0.001, 0.001);
+
+          const knotGeo = new THREE.TorusKnotGeometry(1.35, 0.38, 128, 28, 2, 3);
+          this.knotMat = new THREE.MeshBasicMaterial({
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7,
+            color: 0x38bdf8
+          });
+          this.knotMesh = new THREE.Mesh(knotGeo, this.knotMat);
+          this.torusGroup.add(this.knotMesh);
+
+          const miniNucleusGeo = new THREE.SphereGeometry(0.55, 16, 16);
+          this.miniNucleusMat = new THREE.MeshStandardMaterial({
+            roughness: 0.3,
+            metalness: 0.8,
+            color: 0x4ae176
+          });
+          this.miniNucleus = new THREE.Mesh(miniNucleusGeo, this.miniNucleusMat);
+          this.torusGroup.add(this.miniNucleus);
+
+          this.rootGroup.add(this.torusGroup);
+
+          // Mode 3: Synapse Matrix Point Cloud
+          this.matrixGroup = new THREE.Group();
+          this.matrixGroup.visible = false;
+          this.matrixGroup.scale.set(0.001, 0.001, 0.001);
+
+          const pCount = 180;
+          const posArray = new Float32Array(pCount * 3);
+          for (let i = 0; i < pCount; i++) {
+            const u = Math.random();
+            const v = Math.random();
+            const theta = u * 2.0 * Math.PI;
+            const phi = Math.acos(2.0 * v - 1.0);
+            const r = Math.cbrt(Math.random()) * 2.1;
+            const sinPhi = Math.sin(phi);
+            posArray[i * 3] = r * sinPhi * Math.cos(theta);
+            posArray[i * 3 + 1] = r * sinPhi * Math.sin(theta);
+            posArray[i * 3 + 2] = r * Math.cos(phi);
+          }
+          const pGeo = new THREE.BufferGeometry();
+          pGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+          this.pointsMat = new THREE.PointsMaterial({
+            size: 0.08,
+            color: 0x38bdf8,
+            transparent: true,
+            opacity: 0.85
+          });
+          this.pointsCloud = new THREE.Points(pGeo, this.pointsMat);
+          this.matrixGroup.add(this.pointsCloud);
+
+          const linePositions = [];
+          for (let i = 0; i < pCount; i++) {
+            const p1 = new THREE.Vector3(posArray[i * 3], posArray[i * 3 + 1], posArray[i * 3 + 2]);
+            for (let j = i + 1; j < pCount; j++) {
+              const p2 = new THREE.Vector3(posArray[j * 3], posArray[j * 3 + 1], posArray[j * 3 + 2]);
+              if (p1.distanceTo(p2) < 0.85) {
+                linePositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+              }
+            }
+          }
+          const linesGeo = new THREE.BufferGeometry();
+          linesGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+          this.synapseLinesMat = new THREE.LineBasicMaterial({
+            color: 0x4ae176,
+            transparent: true,
+            opacity: 0.35
+          });
+          this.synapseLines = new THREE.LineSegments(linesGeo, this.synapseLinesMat);
+          this.matrixGroup.add(this.synapseLines);
+
+          this.rootGroup.add(this.matrixGroup);
+        }
+
+        updateColors() {
+          const isD = this.isDark;
+          const primaryColor = isD ? 0x38bdf8 : 0x0273eb;
+          const secondaryColor = isD ? 0x4ae176 : 0x009144;
+          const nucleusColor = isD ? 0x0f172a : 0x1e293b;
+
+          if (this.outerMat) this.outerMat.color.setHex(primaryColor);
+          if (this.innerMat) this.innerMat.color.setHex(nucleusColor);
+          if (this.ring1Mat) this.ring1Mat.color.setHex(secondaryColor);
+          if (this.ring2Mat) this.ring2Mat.color.setHex(primaryColor);
+          if (this.coreLight) this.coreLight.color.setHex(primaryColor);
+
+          if (this.knotMat) this.knotMat.color.setHex(primaryColor);
+          if (this.miniNucleusMat) this.miniNucleusMat.color.setHex(secondaryColor);
+
+          if (this.pointsMat) this.pointsMat.color.setHex(primaryColor);
+          if (this.synapseLinesMat) this.synapseLinesMat.color.setHex(secondaryColor);
+        }
+
+        bindEvents() {
+          const onResize = () => {
+            if (!this.container) return;
+            this.width = this.container.clientWidth;
+            this.height = this.container.clientHeight;
+            this.camera.aspect = this.width / this.height;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setSize(this.width, this.height);
+          };
+          window.addEventListener('resize', onResize, { passive: true });
+
+          window.addEventListener('mousemove', (e) => {
+            const nx = (e.clientX / window.innerWidth) - 0.5;
+            const ny = (e.clientY / window.innerHeight) - 0.5;
+            this.targetParallax.x = ny * 0.45;
+            this.targetParallax.y = nx * 0.55;
+          }, { passive: true });
+
+          this.canvas.addEventListener('pointerdown', (e) => {
+            this.isDragging = true;
+            this.prevMousePos = { x: e.clientX, y: e.clientY };
+          });
+
+          window.addEventListener('pointermove', (e) => {
+            if (!this.isDragging) return;
+            const deltaX = e.clientX - this.prevMousePos.x;
+            const deltaY = e.clientY - this.prevMousePos.y;
+            this.angularVelocity.y = deltaX * 0.005;
+            this.angularVelocity.x = deltaY * 0.005;
+            this.rootGroup.rotation.y += this.angularVelocity.y;
+            this.rootGroup.rotation.x += this.angularVelocity.x;
+            this.prevMousePos = { x: e.clientX, y: e.clientY };
+          }, { passive: true });
+
+          window.addEventListener('pointerup', () => {
+            this.isDragging = false;
+          });
+
+          this.canvas.addEventListener('click', () => {
+            this.triggerPulse();
+          });
+
+          const modeBtns = document.querySelectorAll('.core-mode-btn');
+          modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+              const mode = btn.getAttribute('data-core-mode');
+              this.setMode(mode);
+
+              modeBtns.forEach(b => {
+                b.className = 'core-mode-btn px-3 py-1 rounded-full font-label-mono text-[11px] tracking-wider transition-all duration-200 text-secondary dark:text-gray-400 hover:text-on-surface dark:hover:text-white';
+              });
+              btn.className = 'core-mode-btn px-3 py-1 rounded-full font-label-mono text-[11px] tracking-wider transition-all duration-200 bg-primary dark:bg-white text-on-primary dark:text-black font-semibold shadow-sm';
+            });
+          });
+
+          if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                this.isVisible = entry.isIntersecting;
+                if (this.isVisible && !this.animFrameId) {
+                  this.start();
+                } else if (!this.isVisible && this.animFrameId) {
+                  this.stop();
+                }
+              });
+            }, { threshold: 0.05 });
+            io.observe(this.container);
+          }
+
+          if ('MutationObserver' in window) {
+            const themeObserver = new MutationObserver(() => {
+              this.updateColors();
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+          }
+        }
+
+        triggerPulse() {
+          this.pulseEnergy = 1.0;
+          try {
+            if (window.soundEngine && typeof window.soundEngine.playTone === 'function') {
+              window.soundEngine.playTone(880, 0.09, 'triangle', 0.04);
+            }
+          } catch (e) {}
+        }
+
+        setMode(mode) {
+          if (mode === this.currentMode) return;
+          this.currentMode = mode;
+          this.triggerPulse();
+
+          const targetGroup = mode === 'lattice' ? this.latticeGroup : (mode === 'torus' ? this.torusGroup : this.matrixGroup);
+          [this.latticeGroup, this.torusGroup, this.matrixGroup].forEach(g => {
+            if (g === targetGroup) {
+              g.visible = true;
+              g.scale.set(1, 1, 1);
+            } else {
+              g.visible = false;
+              g.scale.set(0.001, 0.001, 0.001);
+            }
+          });
+        }
+
+        start() {
+          if (!this.animFrameId) {
+            this.render();
+          }
+        }
+
+        stop() {
+          if (this.animFrameId) {
+            cancelAnimationFrame(this.animFrameId);
+            this.animFrameId = null;
+          }
+        }
+
+        render() {
+          this.animFrameId = requestAnimationFrame(() => this.render());
+
+          if (!this.isDragging) {
+            this.angularVelocity.x *= 0.94;
+            this.angularVelocity.y *= 0.94;
+            this.rootGroup.rotation.y += (0.004 + this.angularVelocity.y);
+            this.rootGroup.rotation.x += this.angularVelocity.x;
+          }
+
+          this.currentParallax.x += (this.targetParallax.x - this.currentParallax.x) * 0.06;
+          this.currentParallax.y += (this.targetParallax.y - this.currentParallax.y) * 0.06;
+          this.camera.position.x = this.currentParallax.y * 1.5;
+          this.camera.position.y = -this.currentParallax.x * 1.5;
+          this.camera.lookAt(0, 0, 0);
+
+          if (this.currentMode === 'lattice') {
+            this.ring1.rotation.z += 0.012;
+            this.ring2.rotation.z -= 0.009;
+            this.innerMesh.rotation.y -= 0.01;
+            this.innerMesh.rotation.x += 0.007;
+          } else if (this.currentMode === 'torus') {
+            this.knotMesh.rotation.x += 0.005;
+            this.knotMesh.rotation.z += 0.008;
+          } else if (this.currentMode === 'matrix') {
+            this.pointsCloud.rotation.y += 0.003;
+            this.synapseLines.rotation.y += 0.003;
+          }
+
+          if (this.pulseEnergy > 0.01) {
+            this.pulseEnergy *= 0.92;
+            const scale = 1.0 + this.pulseEnergy * 0.18;
+            this.rootGroup.scale.set(scale, scale, scale);
+            this.coreLight.intensity = 2.0 + this.pulseEnergy * 4.0;
+          } else {
+            this.rootGroup.scale.set(1, 1, 1);
+            this.coreLight.intensity = 2.0;
+          }
+
+          this.renderer.render(this.scene, this.camera);
+        }
+      }
+
+      // 16. Interactive 3D Dot-Matrix Global Network Globe (Three.js WebGL)
+      class Contact3DGlobe {
+        constructor() {
+          this.canvas = document.getElementById('contact-globe-canvas');
+          if (!this.canvas || typeof THREE === 'undefined') return;
+
+          this.container = this.canvas.parentElement;
+          this.scene = new THREE.Scene();
+
+          this.width = this.container.clientWidth || 360;
+          this.height = this.container.clientHeight || 360;
+
+          this.camera = new THREE.PerspectiveCamera(42, this.width / this.height, 0.1, 100);
+          this.camera.position.z = 5.6;
+
+          this.renderer = new THREE.WebGLRenderer({
+            canvas: this.canvas,
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+          });
+          this.renderer.setSize(this.width, this.height);
+          this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+          this.globeRadius = 1.85;
+          this.globeGroup = new THREE.Group();
+          this.globeGroup.rotation.z = 0.28;
+          this.globeGroup.rotation.y = -1.35;
+          this.scene.add(this.globeGroup);
+
+          this.isDragging = false;
+          this.prevMousePos = { x: 0, y: 0 };
+          this.angularVelocity = { x: 0, y: 0.0025 };
+          this.pulseTime = 0;
+          this.isVisible = true;
+          this.animFrameId = null;
+
+          this.arcPulses = [];
+
+          this.buildGlobe();
+          this.buildHubsAndArcs();
+          this.bindEvents();
+          this.updateColors();
+          this.start();
+        }
+
+        get isDark() {
+          return document.documentElement.classList.contains('dark');
+        }
+
+        latLonToVector3(lat, lon, r) {
+          const phi = (90 - lat) * (Math.PI / 180);
+          const theta = (lon + 180) * (Math.PI / 180);
+          const x = -(r * Math.sin(phi) * Math.cos(theta));
+          const z = (r * Math.sin(phi) * Math.sin(theta));
+          const y = (r * Math.cos(phi));
+          return new THREE.Vector3(x, y, z);
+        }
+
+        isLand(lat, lon) {
+          if (lat >= 6 && lat <= 36 && lon >= 68 && lon <= 92) return true;
+          if (lat >= -10 && lat <= 55 && lon >= 95 && lon <= 145) return true;
+          if (lat >= 12 && lat <= 50 && lon >= 35 && lon <= 68) return true;
+          if (lat >= 35 && lat <= 70 && lon >= -10 && lon <= 40) return true;
+          if (lat >= 50 && lat <= 75 && lon >= 30 && lon <= 175) return true;
+          if (lat >= -35 && lat <= 37 && lon >= -18 && lon <= 52) return true;
+          if (lat >= 15 && lat <= 70 && lon >= -165 && lon <= -50) return true;
+          if (lat >= -56 && lat <= 12 && lon >= -82 && lon <= -34) return true;
+          if (lat >= -45 && lat <= -10 && lon >= 112 && lon <= 178) return true;
+          return false;
+        }
+
+        buildGlobe() {
+          const numPoints = 1400;
+          const phi = Math.PI * (3 - Math.sqrt(5));
+          const landPositions = [];
+          const oceanPositions = [];
+
+          for (let i = 0; i < numPoints; i++) {
+            const y = 1 - (i / (numPoints - 1)) * 2;
+            const radiusAtY = Math.sqrt(1 - y * y);
+            const theta = phi * i;
+            const x = Math.cos(theta) * radiusAtY;
+            const z = Math.sin(theta) * radiusAtY;
+
+            const lat = Math.asin(y) * (180 / Math.PI);
+            const lon = Math.atan2(x, z) * (180 / Math.PI);
+
+            if (this.isLand(lat, lon)) {
+              landPositions.push(x * this.globeRadius, y * this.globeRadius, z * this.globeRadius);
+            } else if (i % 3 === 0) {
+              oceanPositions.push(x * this.globeRadius, y * this.globeRadius, z * this.globeRadius);
+            }
+          }
+
+          const landGeo = new THREE.BufferGeometry();
+          landGeo.setAttribute('position', new THREE.Float32BufferAttribute(landPositions, 3));
+          this.landMat = new THREE.PointsMaterial({
+            size: 0.055,
+            color: 0x38bdf8,
+            transparent: true,
+            opacity: 0.9
+          });
+          this.landPoints = new THREE.Points(landGeo, this.landMat);
+          this.globeGroup.add(this.landPoints);
+
+          const oceanGeo = new THREE.BufferGeometry();
+          oceanGeo.setAttribute('position', new THREE.Float32BufferAttribute(oceanPositions, 3));
+          this.oceanMat = new THREE.PointsMaterial({
+            size: 0.03,
+            color: 0x747878,
+            transparent: true,
+            opacity: 0.22
+          });
+          this.oceanPoints = new THREE.Points(oceanGeo, this.oceanMat);
+          this.globeGroup.add(this.oceanPoints);
+
+          const coreGeo = new THREE.SphereGeometry(this.globeRadius * 0.98, 32, 32);
+          this.coreMat = new THREE.MeshBasicMaterial({
+            color: 0x0f172a,
+            transparent: true,
+            opacity: 0.65
+          });
+          this.coreMesh = new THREE.Mesh(coreGeo, this.coreMat);
+          this.globeGroup.add(this.coreMesh);
+        }
+
+        buildHubsAndArcs() {
+          const noidaCoords = { lat: 28.5355, lon: 77.3910, name: 'Noida (Delhi NCR)' };
+          this.noidaPos = this.latLonToVector3(noidaCoords.lat, noidaCoords.lon, this.globeRadius);
+
+          const beaconGeo = new THREE.SphereGeometry(0.065, 16, 16);
+          this.beaconMat = new THREE.MeshBasicMaterial({ color: 0x4ae176 });
+          this.beaconMesh = new THREE.Mesh(beaconGeo, this.beaconMat);
+          this.beaconMesh.position.copy(this.noidaPos);
+          this.globeGroup.add(this.beaconMesh);
+
+          const haloGeo = new THREE.RingGeometry(0.08, 0.12, 32);
+          this.haloMat = new THREE.MeshBasicMaterial({
+            color: 0x4ae176,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.8
+          });
+          this.haloMesh = new THREE.Mesh(haloGeo, this.haloMat);
+          this.haloMesh.position.copy(this.noidaPos);
+          this.haloMesh.lookAt(0, 0, 0);
+          this.globeGroup.add(this.haloMesh);
+
+          const hubs = [
+            { lat: 55.7558, lon: 37.6173, name: 'Moscow, Russia' },
+            { lat: 37.7749, lon: -122.4194, name: 'San Francisco, US' },
+            { lat: 51.5074, lon: -0.1278, name: 'London, UK' },
+            { lat: 35.6762, lon: 139.6503, name: 'Tokyo, Japan' },
+            { lat: 1.3521, lon: 103.8198, name: 'Singapore' }
+          ];
+
+          this.arcLines = [];
+
+          hubs.forEach((hub, idx) => {
+            const hubPos = this.latLonToVector3(hub.lat, hub.lon, this.globeRadius);
+
+            const hGeo = new THREE.SphereGeometry(0.038, 12, 12);
+            const hMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+            const hMesh = new THREE.Mesh(hGeo, hMat);
+            hMesh.position.copy(hubPos);
+            this.globeGroup.add(hMesh);
+
+            const d = this.noidaPos.distanceTo(hubPos);
+            const midPos = this.noidaPos.clone().add(hubPos).multiplyScalar(0.5);
+            const loftRadius = this.globeRadius + Math.min(1.1, d * 0.38);
+            midPos.normalize().multiplyScalar(loftRadius);
+
+            const curve = new THREE.QuadraticBezierCurve3(this.noidaPos, midPos, hubPos);
+            const curvePoints = curve.getPoints(45);
+            const arcGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
+            const arcMat = new THREE.LineBasicMaterial({
+              color: 0x38bdf8,
+              transparent: true,
+              opacity: 0.55
+            });
+            const line = new THREE.Line(arcGeo, arcMat);
+            this.globeGroup.add(line);
+            this.arcLines.push(line);
+
+            const packetGeo = new THREE.SphereGeometry(0.035, 8, 8);
+            const packetMat = new THREE.MeshBasicMaterial({ color: 0x4ae176 });
+            const packetMesh = new THREE.Mesh(packetGeo, packetMat);
+            this.globeGroup.add(packetMesh);
+
+            this.arcPulses.push({
+              mesh: packetMesh,
+              curve: curve,
+              progress: (idx * 0.2) % 1.0,
+              speed: 0.0055 + (idx * 0.0008)
+            });
+          });
+        }
+
+        updateColors() {
+          const isD = this.isDark;
+          const landCol = isD ? 0x38bdf8 : 0x0273eb;
+          const beaconCol = isD ? 0x4ae176 : 0x009144;
+          const arcCol = isD ? 0x38bdf8 : 0x0273eb;
+          const coreCol = isD ? 0x0a0c10 : 0xf1f5f9;
+
+          if (this.landMat) this.landMat.color.setHex(landCol);
+          if (this.beaconMat) this.beaconMat.color.setHex(beaconCol);
+          if (this.haloMat) this.haloMat.color.setHex(beaconCol);
+          if (this.coreMat) this.coreMat.color.setHex(coreCol);
+          if (this.arcLines) {
+            this.arcLines.forEach(l => l.material.color.setHex(arcCol));
+          }
+          if (this.arcPulses) {
+            this.arcPulses.forEach(p => p.mesh.material.color.setHex(beaconCol));
+          }
+        }
+
+        bindEvents() {
+          const onResize = () => {
+            if (!this.container) return;
+            this.width = this.container.clientWidth;
+            this.height = this.container.clientHeight;
+            this.camera.aspect = this.width / this.height;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setSize(this.width, this.height);
+          };
+          window.addEventListener('resize', onResize, { passive: true });
+
+          this.canvas.addEventListener('pointerdown', (e) => {
+            this.isDragging = true;
+            this.prevMousePos = { x: e.clientX, y: e.clientY };
+          });
+
+          window.addEventListener('pointermove', (e) => {
+            if (!this.isDragging) return;
+            const deltaX = e.clientX - this.prevMousePos.x;
+            const deltaY = e.clientY - this.prevMousePos.y;
+            this.angularVelocity.y = deltaX * 0.006;
+            this.angularVelocity.x = deltaY * 0.006;
+            this.globeGroup.rotation.y += this.angularVelocity.y;
+            this.globeGroup.rotation.x += this.angularVelocity.x;
+            this.prevMousePos = { x: e.clientX, y: e.clientY };
+          }, { passive: true });
+
+          window.addEventListener('pointerup', () => {
+            this.isDragging = false;
+          });
+
+          if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                this.isVisible = entry.isIntersecting;
+                if (this.isVisible && !this.animFrameId) {
+                  this.start();
+                } else if (!this.isVisible && this.animFrameId) {
+                  this.stop();
+                }
+              });
+            }, { threshold: 0.05 });
+            io.observe(this.container);
+          }
+
+          if ('MutationObserver' in window) {
+            const themeObserver = new MutationObserver(() => {
+              this.updateColors();
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+          }
+        }
+
+        start() {
+          if (!this.animFrameId) {
+            this.render();
+          }
+        }
+
+        stop() {
+          if (this.animFrameId) {
+            cancelAnimationFrame(this.animFrameId);
+            this.animFrameId = null;
+          }
+        }
+
+        render() {
+          this.animFrameId = requestAnimationFrame(() => this.render());
+
+          if (!this.isDragging) {
+            this.angularVelocity.x *= 0.94;
+            this.angularVelocity.y *= 0.94;
+            this.globeGroup.rotation.y += (0.0035 + this.angularVelocity.y);
+            this.globeGroup.rotation.x += this.angularVelocity.x;
+          }
+
+          this.pulseTime += 0.04;
+          const haloScale = 1.0 + Math.sin(this.pulseTime) * 0.45;
+          const haloAlpha = 0.85 - (haloScale - 0.55) * 0.6;
+          this.haloMesh.scale.set(haloScale, haloScale, 1);
+          this.haloMat.opacity = Math.max(0.1, haloAlpha);
+
+          for (let i = 0; i < this.arcPulses.length; i++) {
+            const p = this.arcPulses[i];
+            p.progress += p.speed;
+            if (p.progress > 1.0) p.progress = 0;
+            const pt = p.curve.getPoint(p.progress);
+            p.mesh.position.copy(pt);
+          }
+
+          this.renderer.render(this.scene, this.camera);
+        }
+      }
+
       // Initialize Engines
       initScrambleEffect();
       initMagneticCursor();
       initLinearBorderGlow();
       const soundEngine = new SoundEngine();
+      window.soundEngine = soundEngine;
+
+      // Initialize 3D WebGL Engines
+      const hero3DCore = new Hero3DAICore();
+      const contact3DGlobe = new Contact3DGlobe();
 
     })();
   </script>
